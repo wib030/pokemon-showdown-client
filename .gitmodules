@@ -1,0 +1,3 @@
+[submodule "caches/pokemon-showdown"]
+	path = caches/pokemon-showdown
+	url = https://github.com/wib030/pokemon-showdown-client
