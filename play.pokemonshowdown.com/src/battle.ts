@@ -1420,18 +1420,18 @@ export class Battle {
 				if (ability) {
 					this.activateAbility(poke, ability.name);
 				}
-				this.weatherTimeLeft = (this.gen <= 5 || isExtremeWeather) ? 0 : 10;
+				this.weatherTimeLeft = (isExtremeWeather) ? 0 : 10;
 				if (weather === 'raindance')
 				{
 					this.weatherTimeLeft = 8;
 				}
-				this.weatherMinTimeLeft = (this.gen <= 5 || isExtremeWeather) ? 0 : 5;
+				this.weatherMinTimeLeft = (isExtremeWeather) ? 0 : 5;
 			} else if (isExtremeWeather) {
 				this.weatherTimeLeft = 0;
 				this.weatherMinTimeLeft = 0;
 			} else {
-				this.weatherTimeLeft = (this.gen <= 3 ? 5 : 10);
-				this.weatherMinTimeLeft = (this.gen <= 3 ? 0 : 5);
+				this.weatherTimeLeft = 10;
+				this.weatherMinTimeLeft = 5;
 			}
 		}
 		this.weather = weather;
