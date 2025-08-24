@@ -3095,6 +3095,11 @@ export class Battle {
 				minTimeLeft = 4;
 				maxTimeLeft = 5;
 			}
+			if (effect.id === 'sunnyday' || effect.id === 'sandstorm' || effect.id === 'hail')
+			{
+				minTimeLeft = 5;
+				maxTimeLeft = 10;
+			}
 			if (effect.id.endsWith('terrain')) {
 				for (let i = this.pseudoWeather.length - 1; i >= 0; i--) {
 					let pwID = toID(this.pseudoWeather[i][0]);
