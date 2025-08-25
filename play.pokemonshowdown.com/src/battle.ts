@@ -1735,7 +1735,6 @@ export class Battle {
 					break;
 				case 'bind':
 				case 'wrap':
-				case 'stickybarbchip':
 					this.scene.runOtherAnim('bound' as ID, [poke]);
 					break;
 				}
