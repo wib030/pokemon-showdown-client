@@ -2684,9 +2684,6 @@ export class Battle {
 			case 'nightmare':
 				this.scene.resultAnim(poke, 'Nightmare', 'bad');
 				break;
-			case 'stickybarbchip':
-				this.scene.resultAnim(poke, 'Sticky Barb', 'bad');
-				break;
 			case 'magnetrise':
 				this.scene.resultAnim(poke, 'Magnet Rise', 'good');
 				break;
@@ -2714,6 +2711,11 @@ export class Battle {
 				break;
 			case 'reflect':
 				this.scene.resultAnim(poke, 'Reflect', 'good');
+				break;
+				
+			// New
+			case 'stickybarbchip':
+				this.scene.resultAnim(poke, 'Sticky Barb', 'bad');
 				break;
 			}
 			if (!(effect.id === 'typechange' && poke.terastallized)) {
@@ -2810,6 +2812,9 @@ export class Battle {
 					poke.removeVolatile('quarkdrivespa' as ID);
 					poke.removeVolatile('quarkdrivespd' as ID);
 					poke.removeVolatile('quarkdrivespe' as ID);
+					break;
+				case 'stickybarbchip':
+					this.scene.resultAnim(poke, 'Sticky Barb ended', 'good');
 					break;
 				default:
 					if (effect.effectType === 'Move') {
