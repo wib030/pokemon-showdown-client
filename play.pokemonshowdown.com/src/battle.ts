@@ -1421,16 +1421,14 @@ export class Battle {
 					this.activateAbility(poke, ability.name);
 				}
 				this.weatherTimeLeft = (isExtremeWeather) ? 0 : 10;
-				if (weather === 'raindance')
-				{
-					this.weatherTimeLeft = 8;
-				}
+				this.weatherTimeLeft = (weather === 'raindance') ? 8 : 10;
 				this.weatherMinTimeLeft = (isExtremeWeather) ? 0 : 5;
 			} else if (isExtremeWeather) {
 				this.weatherTimeLeft = 0;
 				this.weatherMinTimeLeft = 0;
 			} else {
 				this.weatherTimeLeft = 10;
+				this.weatherTimeLeft = (weather === 'raindance') ? 8 : 10;
 				this.weatherMinTimeLeft = 5;
 			}
 		}
@@ -2685,6 +2683,9 @@ export class Battle {
 				break;
 			case 'nightmare':
 				this.scene.resultAnim(poke, 'Nightmare', 'bad');
+				break;
+			case 'stickybarbchip':
+				this.scene.resultAnim(poke, 'Sticky Barb', 'bad');
 				break;
 			case 'magnetrise':
 				this.scene.resultAnim(poke, 'Magnet Rise', 'good');
