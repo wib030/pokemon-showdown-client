@@ -1735,6 +1735,7 @@ export class Battle {
 					break;
 				case 'bind':
 				case 'wrap':
+				case 'stickybarbchip':
 					this.scene.runOtherAnim('bound' as ID, [poke]);
 					break;
 				}
@@ -2814,7 +2815,7 @@ export class Battle {
 					poke.removeVolatile('quarkdrivespe' as ID);
 					break;
 				case 'stickybarbchip':
-					poke.removeVolatile('stickybarbchip' as ID);
+					this.scene.resultAnim(poke, 'Sticky Barb ended', 'good');
 					break;
 				default:
 					if (effect.effectType === 'Move') {

@@ -642,6 +642,8 @@ function pokeConvertInner($text) {
 			markLastDamage($out);
 		} else if (endsRemove($line, ' blew away Leech Seed!')) {
 			$out[] = '|-blow-away '.resolvePokemon($line).' LeechSeed';
+			} else if (endsRemove($line, ' blew away Sticky Barb!')) {
+			$out[] = '|-blow-away '.resolvePokemon($line).' StickyBarb';
 		} else if (endsRemove($line, ' blew away Stealth Rock!')) {
 			$out[] = '|-blow-away '.resolvePokemon($line).' StealthRock';
 		} else if (endsRemove($line, ' blew away Spikes!')) {
