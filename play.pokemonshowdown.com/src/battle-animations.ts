@@ -1811,6 +1811,7 @@ export class PokemonSprite extends Sprite {
 		powertrick: ['Power Trick', 'neutral'],
 		curse: ['Curse', 'bad'],
 		nightmare: ['Nightmare', 'bad'],
+		stickybarbchip: ['Sticky Barb', 'bad'],
 		attract: ['Infatuation', 'bad'],
 		torment: ['Torment', 'bad'],
 		taunt: ['Taunt', 'bad'],
