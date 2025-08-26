@@ -758,7 +758,7 @@ export class BattleTooltips {
 			if (move.flags.sound) {
 				text += `<p class="movetag">&#x2713; Sound <small>(doesn't affect Soundproof pokemon)</small></p>`;
 			}
-			if (move.flags.powder && this.battle.gen > 5) {
+			if (move.flags.powder) {
 				text += `<p class="movetag">&#x2713; Powder <small>(doesn't affect Grass, Overcoat, Safety Goggles)</small></p>`;
 			}
 			if (move.flags.punch && ability === 'ironfist') {
@@ -1403,11 +1403,7 @@ export class BattleTooltips {
 		stats.spe = stats.spe % 1 > 0.5 ? Math.ceil(stats.spe) : Math.floor(stats.spe);
 
 		if (pokemon.status === 'par' && ability !== 'quickfeet') {
-			if (this.battle.gen > 6) {
-				stats.spe = Math.floor(stats.spe * 0.5);
-			} else {
-				stats.spe = Math.floor(stats.spe * 0.25);
-			}
+			stats.spe = Math.floor(stats.spe * 0.25);
 		}
 
 		return stats;
@@ -1755,7 +1751,7 @@ export class BattleTooltips {
 
 		let pokemon = value.pokemon;
 		// Sure-hit accuracy
-		if (move.id === 'toxic' && this.battle.gen >= 6 && this.pokemonHasType(pokemon, 'Poison')) {
+		if (move.id === 'toxic' && this.pokemonHasType(pokemon, 'Poison')) {
 			value.set(0, "Poison type");
 			return value;
 		}
@@ -2162,9 +2158,7 @@ export class BattleTooltips {
 				value.abilityModify(this.battle.gen > 6 ? 1.2 : 1.3, "Pixilate");
 				value.abilityModify(this.battle.gen > 6 ? 1.2 : 1.3, "Refrigerate");
 			}
-			if (this.battle.gen > 6) {
-				value.abilityModify(1.2, "Normalize");
-			}
+			value.abilityModify(1.2, "Normalize");
 		}
 		if (move.recoil || move.hasCrashDamage) {
 			value.abilityModify(1.2, 'Reckless');

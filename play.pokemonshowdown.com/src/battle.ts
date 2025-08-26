@@ -709,7 +709,7 @@ export class Side {
 			this.sideConditions[condition] = [effect.name, 1, 5, 0];
 			break;
 		case 'tailwind':
-			this.sideConditions[condition] = [effect.name, 1, this.battle.gen >= 5 ? persist ? 6 : 4 : persist ? 5 : 3, 0];
+			this.sideConditions[condition] = [effect.name, 1, this.battle.gen >= 4 ? persist ? 6 : 4 : persist ? 5 : 3, 0];
 			break;
 		case 'luckychant':
 			this.sideConditions[condition] = [effect.name, 1, 5, 0];
@@ -3099,11 +3099,6 @@ export class Battle {
 			{
 				minTimeLeft = 4;
 				maxTimeLeft = 5;
-			}
-			if (effect.id === 'sunnyday' || effect.id === 'sandstorm' || effect.id === 'hail')
-			{
-				minTimeLeft = 5;
-				maxTimeLeft = 10;
 			}
 			if (effect.id.endsWith('terrain')) {
 				for (let i = this.pseudoWeather.length - 1; i >= 0; i--) {
