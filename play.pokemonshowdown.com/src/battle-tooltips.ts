@@ -764,9 +764,6 @@ export class BattleTooltips {
 			if (move.flags.punch && ability === 'ironfist') {
 				text += `<p class="movetag">&#x2713; Fist <small>(boosted by Iron Fist)</small></p>`;
 			}
-			if (move.flags.punch && item === 'loadedgloves') {
-				text += `<p class="movetag">&#x2713; Fist <small>(boosted by Loaded Gloves)</small></p>`;
-			}
 			if (move.flags.pulse && ability === 'megalauncher') {
 				text += `<p class="movetag">&#x2713; Pulse <small>(boosted by Mega Launcher)</small></p>`;
 			}
@@ -2112,12 +2109,7 @@ export class BattleTooltips {
 			value.abilityModify(1.5, "Flare Boost");
 		}
 		if (move.flags['punch']) {
-			value.abilityModify(1.2, 'Iron Fist');
-		} else if (move.flags['punch'] && this.battle.gen === 4) {
 			value.abilityModify(1.3, 'Iron Fist');
-		}
-		if (move.flags['punch'] && item === 'loadedgloves') {
-			value.itemModify(1.2);
 		}
 		if (move.flags['pulse']) {
 			value.abilityModify(1.5, "Mega Launcher");
@@ -2471,6 +2463,10 @@ export class BattleTooltips {
 			itemName === 'Wise Glasses' && move.category === 'Special' ||
 			itemName === 'Punching Glove' && move.flags['punch']) {
 			value.itemModify(1.1);
+		}
+		
+		if (itemName === 'Loaded Gloves' && move.flags['punch']) {
+			value.itemModify(1.2);
 		}
 
 		return value;
