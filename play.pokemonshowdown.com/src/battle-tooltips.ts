@@ -1178,13 +1178,14 @@ export class BattleTooltips {
 						for (const ally of allyActive) {
 							if (!ally || ally.fainted) continue;
 							let allyAbility = this.getAllyAbility(ally);
-							if (allyAbility === 'Flower Gift' && ability !== 'flowergift' && (ally.getSpecies().baseSpecies === 'Cherrim' || this.battle.gen <= 4)) {
-								stats.atk = Math.floor(stats.atk * 1.5);
-								stats.spa = Math.floor(stats.spa * 1.5);
-							}
-							if (allyAbility === 'Flower Gift' && ability === 'flowergift') {
-								stats.def = Math.floor(stats.def * 1.5);
-								stats.spd = Math.floor(stats.spd * 1.5);
+							if (allyAbility === 'Flower Gift' && (ally.getSpecies().baseSpecies === 'Cherrim' || this.battle.gen <= 4)) {
+								if (ability === 'flowergift') {
+									stats.def = Math.floor(stats.def * 1.5);
+									stats.spd = Math.floor(stats.spd * 1.5);
+								} else {
+									stats.atk = Math.floor(stats.atk * 1.5);
+									stats.spa = Math.floor(stats.spa * 1.5);
+								}
 							}
 						}
 					}
