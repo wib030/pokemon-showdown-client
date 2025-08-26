@@ -1218,7 +1218,9 @@ export class BattleTooltips {
 			if (ability === 'marvelscale') {
 				stats.def = Math.floor(stats.def * 1.5);
 			}
-			if (ability === 'quickfeet') {
+			if (ability === 'quickfeet' && pokemon.status === 'par') {
+				speedModifiers.push(2);
+			} else if (ability === 'quickfeet') {
 				speedModifiers.push(1.5);
 			}
 		}
@@ -1403,7 +1405,7 @@ export class BattleTooltips {
 		stats.spe = stats.spe % 1 > 0.5 ? Math.ceil(stats.spe) : Math.floor(stats.spe);
 
 		if (pokemon.status === 'par' && ability !== 'quickfeet') {
-			stats.spe = Math.floor(stats.spe * 0.25);
+			stats.spe = Math.floor(stats.spe * 0.5);
 		}
 
 		return stats;
