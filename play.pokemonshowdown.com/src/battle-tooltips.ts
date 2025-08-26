@@ -764,6 +764,9 @@ export class BattleTooltips {
 			if (move.flags.punch && ability === 'ironfist') {
 				text += `<p class="movetag">&#x2713; Fist <small>(boosted by Iron Fist)</small></p>`;
 			}
+			if (move.flags.punch && item === 'loadedgloves') {
+				text += `<p class="movetag">&#x2713; Fist <small>(boosted by Loaded Gloves)</small></p>`;
+			}
 			if (move.flags.pulse && ability === 'megalauncher') {
 				text += `<p class="movetag">&#x2713; Pulse <small>(boosted by Mega Launcher)</small></p>`;
 			}
@@ -1178,8 +1181,12 @@ export class BattleTooltips {
 						for (const ally of allyActive) {
 							if (!ally || ally.fainted) continue;
 							let allyAbility = this.getAllyAbility(ally);
-							if (allyAbility === 'Flower Gift' && (ally.getSpecies().baseSpecies === 'Cherrim' || this.battle.gen <= 4)) {
+							if (allyAbility === 'Flower Gift' && ability !== 'flowergift' && (ally.getSpecies().baseSpecies === 'Cherrim' || this.battle.gen <= 4)) {
 								stats.atk = Math.floor(stats.atk * 1.5);
+								stats.spa = Math.floor(stats.spa * 1.5);
+							}
+							if (allyAbility === 'Flower Gift' && ability === 'flowergift') {
+								stats.def = Math.floor(stats.def * 1.5);
 								stats.spd = Math.floor(stats.spd * 1.5);
 							}
 						}
@@ -2106,6 +2113,11 @@ export class BattleTooltips {
 		}
 		if (move.flags['punch']) {
 			value.abilityModify(1.2, 'Iron Fist');
+		} else if (move.flags['punch'] && this.battle.gen === 4) {
+			value.abilityModify(1.3, 'Iron Fist');
+		}
+		if (move.flags['punch'] && item === 'loadedgloves') {
+			value.itemModify(1.2);
 		}
 		if (move.flags['pulse']) {
 			value.abilityModify(1.5, "Mega Launcher");
