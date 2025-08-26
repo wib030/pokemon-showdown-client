@@ -1419,8 +1419,7 @@ export class Battle {
 			if (poke) {
 				if (ability) {
 					this.activateAbility(poke, ability.name);
-				}
-				this.weatherTimeLeft = (isExtremeWeather) ? 0 : 10;
+				} 
 				this.weatherTimeLeft = (weather === 'raindance') ? 8 : 10;
 				this.weatherMinTimeLeft = (isExtremeWeather) ? 0 : 5;
 			} else if (isExtremeWeather) {
@@ -3095,11 +3094,6 @@ export class Battle {
 			this.activateAbility(poke, fromeffect);
 			let minTimeLeft = 5;
 			let maxTimeLeft = 0;
-			if (effect.id === 'gravity')
-			{
-				minTimeLeft = 4;
-				maxTimeLeft = 5;
-			}
 			if (effect.id.endsWith('terrain')) {
 				for (let i = this.pseudoWeather.length - 1; i >= 0; i--) {
 					let pwID = toID(this.pseudoWeather[i][0]);
@@ -3111,6 +3105,11 @@ export class Battle {
 				if (this.gen > 6) maxTimeLeft = 8;
 			}
 			if (kwArgs.persistent) minTimeLeft += 2;
+			if (effect.id === 'gravity')
+			{
+				minTimeLeft = 4;
+				maxTimeLeft = 5;
+			}
 			this.addPseudoWeather(effect.name, minTimeLeft, maxTimeLeft);
 
 			switch (effect.id) {
