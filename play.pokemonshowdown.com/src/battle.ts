@@ -1414,27 +1414,24 @@ export class Battle {
 			}
 			return;
 		}
-		if (this.weather !== weather)
-		{
-			if (weather) {
-				let isExtremeWeather = (weather === 'deltastream' || weather === 'desolateland' || weather === 'primordialsea');
-				if (poke) {
-					if (ability) {
-						this.activateAbility(poke, ability.name);
-					} 
-					this.weatherTimeLeft = (weather === 'raindance') ? 8 : 10;
-					this.weatherMinTimeLeft = (isExtremeWeather) ? 0 : 5;
-				} else if (isExtremeWeather) {
-					this.weatherTimeLeft = 0;
-					this.weatherMinTimeLeft = 0;
-				} else {
-					this.weatherTimeLeft = (this.gen <= 3 ? 5 : 8);
-					this.weatherMinTimeLeft = (this.gen <= 3 ? 0 : 5);
-				}
+		if (weather) {
+			let isExtremeWeather = (weather === 'deltastream' || weather === 'desolateland' || weather === 'primordialsea');
+			if (poke) {
+				if (ability) {
+					this.activateAbility(poke, ability.name);
+				} 
+				this.weatherTimeLeft = (weather === 'raindance') ? 8 : 10;
+				this.weatherMinTimeLeft = (isExtremeWeather) ? 0 : 5;
+			} else if (isExtremeWeather) {
+				this.weatherTimeLeft = 0;
+				this.weatherMinTimeLeft = 0;
+			} else {
+				this.weatherTimeLeft = (this.gen <= 3 ? 5 : 8);
+				this.weatherMinTimeLeft = (this.gen <= 3 ? 0 : 5);
 			}
-			this.weather = weather;
-			this.scene.updateWeather();
-		}	
+		}
+		this.weather = weather;
+		this.scene.updateWeather();
 	}
 	swapSideConditions() {
 		const sideConditions = [
