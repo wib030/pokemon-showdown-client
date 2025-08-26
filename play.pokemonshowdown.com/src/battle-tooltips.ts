@@ -2145,10 +2145,8 @@ export class BattleTooltips {
 			}
 		}
 		if (target) {
-			if (["MF", "FM"].includes(pokemon.gender + target.gender)) {
-				value.abilityModify(0.75, "Rivalry");
-			} else if (["MM", "FF"].includes(pokemon.gender + target.gender)) {
-				value.abilityModify(1.25, "Rivalry");
+			if (["MM", "FF"].includes(pokemon.gender + target.gender)) {
+				value.abilityModify(1.5, "Rivalry");
 			}
 		}
 		const noTypeOverride = [
