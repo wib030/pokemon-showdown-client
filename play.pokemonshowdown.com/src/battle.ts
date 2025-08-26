@@ -1427,9 +1427,8 @@ export class Battle {
 				this.weatherTimeLeft = 0;
 				this.weatherMinTimeLeft = 0;
 			} else {
-				this.weatherTimeLeft = 10;
-				this.weatherTimeLeft = (weather === 'raindance') ? 8 : 10;
-				this.weatherMinTimeLeft = 5;
+				this.weatherTimeLeft = (this.gen <= 3 ? 5 : 8);
+				this.weatherMinTimeLeft = (this.gen <= 3 ? 0 : 5);
 			}
 		}
 		this.weather = weather;
