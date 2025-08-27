@@ -1755,6 +1755,7 @@ export class BattleTooltips {
 	// Gets the current accuracy for a move.
 	getMoveAccuracy(move: Dex.Move, value: ModifiableValue, target?: Pokemon) {
 		value.reset(move.accuracy === true ? 0 : move.accuracy, true);
+		let moveType = this.getMoveType(move, value);
 
 		let pokemon = value.pokemon;
 		// Sure-hit accuracy
@@ -1800,12 +1801,12 @@ export class BattleTooltips {
 
 		let accuracyModifiers = [];
 		
-		if (this.pokemonHasType(pokemon, move.type)) {
+		if (this.pokemonHasType(pokemon, moveType)) {
 			accuracyModifiers.push(4505);
 			value.modify(1.1, "STAB Boost");
 		}
 		
-		if (this.battle.weather === 'sandstorm' && move.type === 'Rock') {
+		if (this.battle.weather === 'sandstorm' && moveType === 'Rock') {
 			accuracyModifiers.push(4505);
 			value.modify(1.1, "Sandstorm");
 		}
