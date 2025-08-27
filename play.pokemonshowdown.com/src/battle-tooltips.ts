@@ -1797,7 +1797,7 @@ export class BattleTooltips {
 		}
 		
 		if (moveType === 'Normal') {
-			if (value.tryAbility('Aerilate') {
+			if (value.tryAbility('Aerilate')) {
 				moveType = 'Flying';
 			} else if (value.tryAbility('Galvanize')) {
 				moveType = 'Electric';
