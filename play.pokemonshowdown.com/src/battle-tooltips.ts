@@ -1757,16 +1757,7 @@ export class BattleTooltips {
 		value.reset(move.accuracy === true ? 0 : move.accuracy, true);
 		let pokemon = value.pokemon;
 		
-		let moveType = move.type;
-		if (move.id === 'judgment') {
-			moveType = pokemon.species.types[0];
-		}
-		if (moveType === 'Normal') {
-			if (pokemon.hasAbility('aerilate')) moveType = 'Flying';
-			if (pokemon.hasAbility('galvanize')) moveType = 'Electric';
-			if (pokemon.hasAbility('pixilate')) moveType = 'Fairy';
-			if (pokemon.hasAbility('refrigerate')) moveType = 'Ice';
-		}
+		let [moveType, category] = this.getMoveType(move, value, false);
 		
 		// Sure-hit accuracy
 		if (move.id === 'toxic' && this.pokemonHasType(pokemon, 'Poison')) {
