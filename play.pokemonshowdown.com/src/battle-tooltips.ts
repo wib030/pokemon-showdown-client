@@ -1801,10 +1801,12 @@ export class BattleTooltips {
 		let accuracyModifiers = [];
 		
 		if (this.pokemonHasType(pokemon, move.type)) {
+			accuracyModifiers.push(4505);
 			value.modify(1.1, "STAB Boost");
 		}
 		
 		if (this.battle.weather === 'sandstorm' && move.type === 'Rock') {
+			accuracyModifiers.push(4505);
 			value.modify(1.1, "Sandstorm");
 		}
 		
