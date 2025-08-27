@@ -1799,6 +1799,15 @@ export class BattleTooltips {
 		// Accuracy modifiers start
 
 		let accuracyModifiers = [];
+		
+		if (this.pokemonHasType(pokemon, move.type)) {
+			value.modify(1.1, "STAB Boost");
+		}
+		
+		if (this.battle.weather === 'sandstorm' && move.type === 'Rock') {
+			value.modify(1.1, "Sandstorm");
+		}
+		
 		if (this.battle.hasPseudoWeather('Gravity')) {
 			accuracyModifiers.push(6840);
 			value.modify(5 / 3, "Gravity");
