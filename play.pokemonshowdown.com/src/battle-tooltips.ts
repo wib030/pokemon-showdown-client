@@ -2081,8 +2081,8 @@ export class BattleTooltips {
 		if (['lowkick', 'grassknot', 'heavyslam', 'heatcrash'].includes(move.id) && this.battle.gen > 2) {
 			let isGKLK = ['lowkick', 'grassknot'].includes(move.id);
 			if (target) {
-				let targetWeight = target.getWeightKg();
-				let pokemonWeight = pokemon.getWeightKg(serverPokemon);
+				let targetWeight = (this.battle.hasPseudoWeather('Gravity')) ? target.getWeightKg() * 2 : target.getWeightKg();
+				let pokemonWeight = (this.battle.hasPseudoWeather('Gravity')) ? pokemon.getWeightKg(serverPokemon) * 2 : pokemon.getWeightKg(serverPokemon);
 				let basePower;
 				if (isGKLK) {
 					basePower = 20;

@@ -412,12 +412,8 @@ export class Pokemon implements PokemonDetails, PokemonHealth {
 		return '' + badBoostTable[-this.boosts[boostStat]] + '&nbsp;' + boostStatTable[boostStat];
 	}
 	getWeightKg(serverPokemon?: ServerPokemon) {
-		let baseWeight = this.getSpecies(serverPokemon).weightkg;
-		if (battle.hasPseudoWeather('Gravity')) {
-			baseWeight = baseWeight * 2;
-		}
 		let autotomizeFactor = this.volatiles.autotomize?.[1] * 100 || 0;
-		return Math.max(baseWeight - autotomizeFactor, 0.1);
+		return Math.max(this.getSpecies(serverPokemon).weightkg - autotomizeFactor, 0.1);
 	}
 	getBoostType(boostStat: Dex.BoostStatName) {
 		if (!this.boosts[boostStat]) return 'neutral';
