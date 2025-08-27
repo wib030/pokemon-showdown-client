@@ -1797,10 +1797,15 @@ export class BattleTooltips {
 		}
 		
 		if (moveType === 'Normal') {
-			if (pokemon.hasAbility('aerilate')) moveType = 'Flying';
-			if (pokemon.hasAbility('galvanize')) moveType = 'Electric';
-			if (pokemon.hasAbility('pixilate')) moveType = 'Fairy';
-			if (pokemon.hasAbility('refrigerate')) moveType = 'Ice';
+			if (value.tryAbility('Aerilate') {
+				moveType = 'Flying';
+			} else if (value.tryAbility('Galvanize')) {
+				moveType = 'Electric';
+			} else if (value.tryAbility('Pixilate')) {
+				moveType = 'Fairy';
+			} else if (value.tryAbility('Refrigerate')) {
+				moveType = 'Ice';
+			}
 		}
 		
 		// Sure-hit accuracy
