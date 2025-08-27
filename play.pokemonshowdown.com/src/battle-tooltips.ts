@@ -1759,7 +1759,41 @@ export class BattleTooltips {
 		
 		let moveType = move.type;
 		if (move.id === 'judgment') {
-			moveType = pokemon.getTypeList[0];
+			if (value.tryItem('Fist Plate')) {
+				moveType = 'Fighting';
+			} else if (value.tryItem('Sky Plate')) {
+				moveType = 'Flying';
+			} else if (value.tryItem('Toxic Plate')) {
+				moveType = 'Poison';
+			} else if (value.tryItem('Earth Plate')) {
+				moveType = 'Ground';
+			} else if (value.tryItem('Stone Plate')) {
+				moveType = 'Rock';
+			} else if (value.tryItem('Insect Plate')) {
+				moveType = 'Bug';
+			} else if (value.tryItem('Spooky Plate')) {
+				moveType = 'Ghost';
+			} else if (value.tryItem('Iron Plate')) {
+				moveType = 'Steel';
+			} else if (value.tryItem('Flame Plate')) {
+				moveType = 'Fire';
+			} else if (value.tryItem('Splash Plate')) {
+				moveType = 'Water';
+			} else if (value.tryItem('Meadow Plate')) {
+				moveType = 'Grass';
+			} else if (value.tryItem('Zap Plate')) {
+				moveType = 'Electric';
+			} else if (value.tryItem('Mind Plate')) {
+				moveType = 'Psychic';
+			} else if (value.tryItem('Icicle Plate')) {
+				moveType = 'Ice';
+			} else if (value.tryItem('Draco Plate')) {
+				moveType = 'Dragon';
+			} else if (value.tryItem('Dread Plate')) {
+				moveType = 'Dark';
+			} else {
+				moveType = 'Normal';
+			}
 		}
 		
 		if (moveType === 'Normal') {
