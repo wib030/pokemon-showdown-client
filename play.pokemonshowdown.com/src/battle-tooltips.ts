@@ -1756,7 +1756,18 @@ export class BattleTooltips {
 	getMoveAccuracy(move: Dex.Move, value: ModifiableValue, target?: Pokemon) {
 		value.reset(move.accuracy === true ? 0 : move.accuracy, true);
 		let pokemon = value.pokemon;
-		let moveType = this.getMoveType(move, value)[0];
+		
+		let moveType = move.type;
+		if (move.id === 'judgment') {
+			moveType = pokemon.getTypeList[0];
+		}
+		
+		if (moveType === 'Normal') {
+			if (pokemon.hasAbility('aerilate')) moveType = 'Flying';
+			if (pokemon.hasAbility('galvanize')) moveType = 'Electric';
+			if (pokemon.hasAbility('pixilate')) moveType = 'Fairy';
+			if (pokemon.hasAbility('refrigerate')) moveType = 'Ice';
+		}
 		
 		// Sure-hit accuracy
 		if (move.id === 'toxic' && this.pokemonHasType(pokemon, 'Poison')) {
