@@ -1756,8 +1756,7 @@ export class BattleTooltips {
 	getMoveAccuracy(move: Dex.Move, value: ModifiableValue, target?: Pokemon) {
 		value.reset(move.accuracy === true ? 0 : move.accuracy, true);
 		let pokemon = value.pokemon;
-		
-		let [moveType, category] = this.getMoveType(move, value, false);
+		let moveType = this.getMoveType(move, value)[0];
 		
 		// Sure-hit accuracy
 		if (move.id === 'toxic' && this.pokemonHasType(pokemon, 'Poison')) {
