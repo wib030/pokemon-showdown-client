@@ -1756,11 +1756,10 @@ export class BattleTooltips {
 	getMoveAccuracy(move: Dex.Move, value: ModifiableValue, target?: Pokemon) {
 		value.reset(move.accuracy === true ? 0 : move.accuracy, true);
 		let pokemon = value.pokemon;
-		let item = pokemon.getItem();
 		
 		let moveType = move.type;
 		if (move.id === 'judgment') {
-			moveType = item.onPlate ? item.onPlate : 'Normal';
+			moveType = pokemon.species.types[0];
 		}
 		if (moveType === 'Normal') {
 			if (pokemon.hasAbility('aerilate')) moveType = 'Flying';
