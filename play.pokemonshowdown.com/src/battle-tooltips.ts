@@ -1805,7 +1805,7 @@ export class BattleTooltips {
 			value.modify(1.1, "STAB Boost");
 		}
 		
-		if (this.battle.weather === 'sandstorm' && move.type === 'Rock') {
+		if (this.battle.weather === 'sandstorm' && item.id !== 'utilityumbrella' && move.type === 'Rock') {
 			accuracyModifiers.push(4505);
 			value.modify(1.1, "Sandstorm");
 		}
