@@ -1800,9 +1800,6 @@ export class BattleTooltips {
 		} else if (value.tryAbility('Normalize')) {
 			moveType = 'Normal';
 		}
-		if (move.id === 'naturalgift' && item.naturalGift) {
-			if (value.itemModify(0)) moveType = item.naturalGift.type;
-		}
 		if (move.id === 'hiddenpower') {
 			moveType = pokemon.hpType || 'Dark';
 		}
