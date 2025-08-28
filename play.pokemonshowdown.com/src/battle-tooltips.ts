@@ -2220,7 +2220,7 @@ export class BattleTooltips {
 			value.abilityModify(1.3, "Punk Rock");
 		}
 		if (move.flags['sound']) {
-			value.abilityModify(1.5, 'Rock Star')
+			value.abilityModify(1.5, 'Rock Star');
 		}
 		if (move.flags['slicing']) {
 			value.abilityModify(1.5, "Sharpness");
