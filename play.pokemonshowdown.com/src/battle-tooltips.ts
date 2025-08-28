@@ -1755,8 +1755,20 @@ export class BattleTooltips {
 	// Gets the current accuracy for a move.
 	getMoveAccuracy(move: Dex.Move, value: ModifiableValue, target?: Pokemon) {
 		value.reset(move.accuracy === true ? 0 : move.accuracy, true);
-
 		let pokemon = value.pokemon;
+		
+		let moveType = move.type;
+		if (move.id === 'judgment') {
+			moveType = pokemon.getTypeList[0];
+		}
+		
+		if (moveType === 'Normal') {
+			if (pokemon.hasAbility('aerilate')) moveType = 'Flying';
+			if (pokemon.hasAbility('galvanize')) moveType = 'Electric';
+			if (pokemon.hasAbility('pixilate')) moveType = 'Fairy';
+			if (pokemon.hasAbility('refrigerate')) moveType = 'Ice';
+		}
+		
 		// Sure-hit accuracy
 		if (move.id === 'toxic' && this.pokemonHasType(pokemon, 'Poison')) {
 			value.set(0, "Poison type");
@@ -1800,12 +1812,12 @@ export class BattleTooltips {
 
 		let accuracyModifiers = [];
 		
-		if (this.pokemonHasType(pokemon, move.type)) {
+		if (this.pokemonHasType(pokemon, moveType)) {
 			accuracyModifiers.push(4505);
 			value.modify(1.1, "STAB Boost");
 		}
 		
-		if (this.battle.weather === 'sandstorm' && move.type === 'Rock') {
+		if (this.battle.weather === 'sandstorm' && moveType === 'Rock') {
 			accuracyModifiers.push(4505);
 			value.modify(1.1, "Sandstorm");
 		}
