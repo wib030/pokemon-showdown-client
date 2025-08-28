@@ -2142,7 +2142,7 @@ export class BattleTooltips {
 		// Moves which have base power changed due to items
 		if (serverPokemon.item) {
 			let item = this.battle.dex.items.get(serverPokemon.item);
-			if (move.id === 'fling' && item.fling) {
+			if (move.id === 'fling' && item.fling && item.fling.basePower) {
 				value.itemModify(item.fling.basePower);
 			}
 			if (move.id === 'naturalgift') {
