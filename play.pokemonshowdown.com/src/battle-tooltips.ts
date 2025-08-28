@@ -1581,6 +1581,9 @@ export class BattleTooltips {
 		if (move.id === 'judgment' && item.onPlate && !item.zMoveType) {
 			if (value.itemModify(0)) moveType = item.onPlate;
 		}
+		if (move.id === 'fling' && item.onPlate && !item.zMoveType) {
+			if (value.itemModify(0)) moveType = item.onPlate;
+		}
 		if (move.id === 'technoblast' && item.onDrive) {
 			if (value.itemModify(0)) moveType = item.onDrive;
 		}
@@ -1693,6 +1696,9 @@ export class BattleTooltips {
 			if (isSound && value.abilityModify(0, 'Liquid Voice')) {
 				moveType = 'Water';
 			}
+			if (isSound && value.abilityModify(0, 'Rock Star')) {
+				moveType = 'Rock';
+			}
 		}
 
 		if (move.id === 'photongeyser' || move.id === 'lightthatburnsthesky' ||
@@ -1756,17 +1762,71 @@ export class BattleTooltips {
 	getMoveAccuracy(move: Dex.Move, value: ModifiableValue, target?: Pokemon) {
 		value.reset(move.accuracy === true ? 0 : move.accuracy, true);
 		let pokemon = value.pokemon;
-		
 		let moveType = move.type;
-		if (move.id === 'judgment') {
-			moveType = pokemon.getTypeList[0];
-		}
 		
-		if (moveType === 'Normal') {
-			if (pokemon.hasAbility('aerilate')) moveType = 'Flying';
-			if (pokemon.hasAbility('galvanize')) moveType = 'Electric';
-			if (pokemon.hasAbility('pixilate')) moveType = 'Fairy';
-			if (pokemon.hasAbility('refrigerate')) moveType = 'Ice';
+		if (move.id === 'judgment' || move.id === 'fling') {
+			if (value.tryItem('Fist Plate')) {
+				moveType = 'Fighting';
+			} else if (value.tryItem('Sky Plate')) {
+				moveType = 'Flying';
+			} else if (value.tryItem('Toxic Plate')) {
+				moveType = 'Poison';
+			} else if (value.tryItem('Earth Plate')) {
+				moveType = 'Ground';
+			} else if (value.tryItem('Stone Plate')) {
+				moveType = 'Rock';
+			} else if (value.tryItem('Insect Plate')) {
+				moveType = 'Bug';
+			} else if (value.tryItem('Spooky Plate')) {
+				moveType = 'Ghost';
+			} else if (value.tryItem('Iron Plate')) {
+				moveType = 'Steel';
+			} else if (value.tryItem('Flame Plate')) {
+				moveType = 'Fire';
+			} else if (value.tryItem('Splash Plate')) {
+				moveType = 'Water';
+			} else if (value.tryItem('Meadow Plate')) {
+				moveType = 'Grass';
+			} else if (value.tryItem('Zap Plate')) {
+				moveType = 'Electric';
+			} else if (value.tryItem('Mind Plate')) {
+				moveType = 'Psychic';
+			} else if (value.tryItem('Icicle Plate')) {
+				moveType = 'Ice';
+			} else if (value.tryItem('Draco Plate')) {
+				moveType = 'Dragon';
+			} else if (value.tryItem('Dread Plate')) {
+				moveType = 'Dark';
+			} else {
+				moveType = (move.id === 'judgment') ? 'Normal' : 'Dark';
+			}
+		} else if (value.tryAbility('Normalize')) {
+			moveType = 'Normal';
+		}
+		if (move.id === 'hiddenpower') {
+			moveType = pokemon.hpType || 'Dark';
+		}
+		if (value.tryAbility('Rock Star') && move.flags['sound']) {
+			moveType = 'Rock';
+		}
+		if (move.id === 'weatherball') {
+			switch (this.battle.weather) {
+			case 'sunnyday':
+			case 'desolateland':
+				moveType = 'Fire';
+				break;
+			case 'raindance':
+			case 'primordialsea':
+				moveType = 'Water';
+				break;
+			case 'sandstorm':
+				moveType = 'Rock';
+				break;
+			case 'hail':
+			case 'snowscape':
+				moveType = 'Ice';
+				break;
+			}
 		}
 		
 		// Sure-hit accuracy
@@ -2158,6 +2218,9 @@ export class BattleTooltips {
 		}
 		if (move.flags['sound']) {
 			value.abilityModify(1.3, "Punk Rock");
+		}
+		if (move.flags['sound']) {
+			value.abilityModify(1.5, 'Rock Star');
 		}
 		if (move.flags['slicing']) {
 			value.abilityModify(1.5, "Sharpness");
