@@ -1581,6 +1581,9 @@ export class BattleTooltips {
 		if (move.id === 'judgment' && item.onPlate && !item.zMoveType) {
 			if (value.itemModify(0)) moveType = item.onPlate;
 		}
+		if (move.id === 'fling' && item.onPlate && !item.zMoveType) {
+			if (value.itemModify(0)) moveType = item.onPlate;
+		}
 		if (move.id === 'technoblast' && item.onDrive) {
 			if (value.itemModify(0)) moveType = item.onDrive;
 		}
