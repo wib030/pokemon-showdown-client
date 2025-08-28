@@ -1581,6 +1581,9 @@ export class BattleTooltips {
 		if (move.id === 'judgment' && item.onPlate && !item.zMoveType) {
 			if (value.itemModify(0)) moveType = item.onPlate;
 		}
+		if (move.id === 'fling' && item.onPlate && !item.zMoveType) {
+			if (value.itemModify(0)) moveType = item.onPlate;
+		}
 		if (move.id === 'technoblast' && item.onDrive) {
 			if (value.itemModify(0)) moveType = item.onDrive;
 		}
@@ -1758,53 +1761,63 @@ export class BattleTooltips {
 		let pokemon = value.pokemon;
 		
 		let moveType = move.type;
-		if (move.id === 'judgment') {
-			if (value.tryItem('Fist Plate')) {
-				moveType = 'Fighting';
-			} else if (value.tryItem('Sky Plate')) {
-				moveType = 'Flying';
-			} else if (value.tryItem('Toxic Plate')) {
-				moveType = 'Poison';
-			} else if (value.tryItem('Earth Plate')) {
-				moveType = 'Ground';
-			} else if (value.tryItem('Stone Plate')) {
-				moveType = 'Rock';
-			} else if (value.tryItem('Insect Plate')) {
-				moveType = 'Bug';
-			} else if (value.tryItem('Spooky Plate')) {
-				moveType = 'Ghost';
-			} else if (value.tryItem('Iron Plate')) {
-				moveType = 'Steel';
-			} else if (value.tryItem('Flame Plate')) {
+		let category = move.category;
+		
+		// Moves that require an item to change their type.
+		let item = this.battle.dex.items.get(value.itemName);
+		if (move.id === 'judgment' && item.onPlate) {
+			if (value.itemModify(0)) moveType = item.onPlate;
+		}
+		if (move.id === 'fling' && item.onPlate) {
+			if (value.itemModify(0)) moveType = item.onPlate;
+		}
+		if (move.id === 'naturalgift' && item.naturalGift) {
+			if (value.itemModify(0)) moveType = item.naturalGift.type;
+		}
+		const moveid = toID(move);
+		if (moveid.startsWith('hiddenpower')) {
+			moveType = moveid.charAt(11).toUpperCase() + moveid.slice(12) as Dex.TypeName;
+		}
+		// Weather and pseudo-weather type changes.
+		if (move.id === 'weatherball' && value.weatherModify(0)) {
+			switch (this.battle.weather) {
+			case 'sunnyday':
+			case 'desolateland':
 				moveType = 'Fire';
-			} else if (value.tryItem('Splash Plate')) {
+				break;
+			case 'raindance':
+			case 'primordialsea':
 				moveType = 'Water';
-			} else if (value.tryItem('Meadow Plate')) {
-				moveType = 'Grass';
-			} else if (value.tryItem('Zap Plate')) {
-				moveType = 'Electric';
-			} else if (value.tryItem('Mind Plate')) {
-				moveType = 'Psychic';
-			} else if (value.tryItem('Icicle Plate')) {
+				break;
+			case 'sandstorm':
+				moveType = 'Rock';
+				break;
+			case 'hail':
+			case 'snowscape':
 				moveType = 'Ice';
-			} else if (value.tryItem('Draco Plate')) {
-				moveType = 'Dragon';
-			} else if (value.tryItem('Dread Plate')) {
-				moveType = 'Dark';
-			} else {
-				moveType = 'Normal';
+				break;
 			}
 		}
-		
-		if (moveType === 'Normal') {
-			if (value.tryAbility('Aerilate')) {
-				moveType = 'Flying';
-			} else if (value.tryAbility('Galvanize')) {
-				moveType = 'Electric';
-			} else if (value.tryAbility('Pixilate')) {
-				moveType = 'Fairy';
-			} else if (value.tryAbility('Refrigerate')) {
-				moveType = 'Ice';
+
+		// Other abilities that change the move type.
+		const noTypeOverride = [
+			'judgment', 'multiattack', 'naturalgift', 'revelationdance', 'struggle', 'technoblast', 'terrainpulse', 'weatherball',
+		];
+		const allowTypeOverride = !noTypeOverride.includes(move.id) && (move.id !== 'terablast' || !pokemon.terastallized);
+		if (allowTypeOverride) {
+
+			if (category !== 'Status' && !move.isZ && !move.id.startsWith('hiddenpower')) {
+				if (moveType === 'Normal') {
+					if (value.abilityModify(0, 'Aerilate')) moveType = 'Flying';
+					if (value.abilityModify(0, 'Galvanize')) moveType = 'Electric';
+					if (value.abilityModify(0, 'Pixilate')) moveType = 'Fairy';
+					if (value.abilityModify(0, 'Refrigerate')) moveType = 'Ice';
+				}
+				if (value.abilityModify(0, 'Normalize')) moveType = 'Normal';
+			}
+			
+			if (move.flags['sound'] && value.abilityModify(0, 'Rock Star')) {
+				moveType = 'Rock';
 			}
 		}
 		
