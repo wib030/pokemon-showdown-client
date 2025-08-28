@@ -1581,6 +1581,9 @@ export class BattleTooltips {
 		if (move.id === 'judgment' && item.onPlate && !item.zMoveType) {
 			if (value.itemModify(0)) moveType = item.onPlate;
 		}
+		if (move.id === 'fling' && item.onPlate && !item.zMoveType) {
+			if (value.itemModify(0)) moveType = item.onPlate;
+		}
 		if (move.id === 'technoblast' && item.onDrive) {
 			if (value.itemModify(0)) moveType = item.onDrive;
 		}
@@ -1693,6 +1696,9 @@ export class BattleTooltips {
 			if (isSound && value.abilityModify(0, 'Liquid Voice')) {
 				moveType = 'Water';
 			}
+			if (isSound && value.abilityModify(0, 'Rock Star')) {
+				moveType = 'Rock';
+			}
 		}
 
 		if (move.id === 'photongeyser' || move.id === 'lightthatburnsthesky' ||
@@ -1756,9 +1762,9 @@ export class BattleTooltips {
 	getMoveAccuracy(move: Dex.Move, value: ModifiableValue, target?: Pokemon) {
 		value.reset(move.accuracy === true ? 0 : move.accuracy, true);
 		let pokemon = value.pokemon;
-		
 		let moveType = move.type;
-		if (move.id === 'judgment') {
+		
+		if (move.id === 'judgment' || move.id === 'fling') {
 			if (value.tryItem('Fist Plate')) {
 				moveType = 'Fighting';
 			} else if (value.tryItem('Sky Plate')) {
@@ -1792,19 +1798,34 @@ export class BattleTooltips {
 			} else if (value.tryItem('Dread Plate')) {
 				moveType = 'Dark';
 			} else {
-				moveType = 'Normal';
+				moveType = (move.id === 'judgment') ? 'Normal' : 'Dark';
 			}
+		} else if (value.tryAbility('Normalize')) {
+			moveType = 'Normal';
 		}
-		
-		if (moveType === 'Normal') {
-			if (value.tryAbility('Aerilate')) {
-				moveType = 'Flying';
-			} else if (value.tryAbility('Galvanize')) {
-				moveType = 'Electric';
-			} else if (value.tryAbility('Pixilate')) {
-				moveType = 'Fairy';
-			} else if (value.tryAbility('Refrigerate')) {
+		if (move.id === 'hiddenpower') {
+			moveType = pokemon.hpType || 'Dark';
+		}
+		if (value.tryAbility('Rock Star') && move.flags['sound']) {
+			moveType = 'Rock';
+		}
+		if (move.id === 'weatherball') {
+			switch (this.battle.weather) {
+			case 'sunnyday':
+			case 'desolateland':
+				moveType = 'Fire';
+				break;
+			case 'raindance':
+			case 'primordialsea':
+				moveType = 'Water';
+				break;
+			case 'sandstorm':
+				moveType = 'Rock';
+				break;
+			case 'hail':
+			case 'snowscape':
 				moveType = 'Ice';
+				break;
 			}
 		}
 		
