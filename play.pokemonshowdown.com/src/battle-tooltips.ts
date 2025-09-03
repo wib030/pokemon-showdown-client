@@ -758,7 +758,7 @@ export class BattleTooltips {
 			if (move.flags.sound) {
 				text += `<p class="movetag">&#x2713; Sound <small>(doesn't affect Soundproof pokemon)</small></p>`;
 			}
-			if (move.flags.powder && this.battle.gen > 5) {
+			if (move.flags.powder) {
 				text += `<p class="movetag">&#x2713; Powder <small>(doesn't affect Grass, Overcoat, Safety Goggles)</small></p>`;
 			}
 			if (move.flags.punch && ability === 'ironfist') {
@@ -1179,8 +1179,13 @@ export class BattleTooltips {
 							if (!ally || ally.fainted) continue;
 							let allyAbility = this.getAllyAbility(ally);
 							if (allyAbility === 'Flower Gift' && (ally.getSpecies().baseSpecies === 'Cherrim' || this.battle.gen <= 4)) {
-								stats.atk = Math.floor(stats.atk * 1.5);
-								stats.spd = Math.floor(stats.spd * 1.5);
+								if (ability === 'flowergift') {
+									stats.def = Math.floor(stats.def * 1.5);
+									stats.spd = Math.floor(stats.spd * 1.5);
+								} else {
+									stats.atk = Math.floor(stats.atk * 1.5);
+									stats.spa = Math.floor(stats.spa * 1.5);
+								}
 							}
 						}
 					}
@@ -1218,7 +1223,9 @@ export class BattleTooltips {
 			if (ability === 'marvelscale') {
 				stats.def = Math.floor(stats.def * 1.5);
 			}
-			if (ability === 'quickfeet') {
+			if (ability === 'quickfeet' && pokemon.status === 'par') {
+				speedModifiers.push(2);
+			} else if (ability === 'quickfeet') {
 				speedModifiers.push(1.5);
 			}
 		}
@@ -1403,11 +1410,7 @@ export class BattleTooltips {
 		stats.spe = stats.spe % 1 > 0.5 ? Math.ceil(stats.spe) : Math.floor(stats.spe);
 
 		if (pokemon.status === 'par' && ability !== 'quickfeet') {
-			if (this.battle.gen > 6) {
-				stats.spe = Math.floor(stats.spe * 0.5);
-			} else {
-				stats.spe = Math.floor(stats.spe * 0.25);
-			}
+			stats.spe = Math.floor(stats.spe * 0.5);
 		}
 
 		return stats;
@@ -1578,6 +1581,9 @@ export class BattleTooltips {
 		if (move.id === 'judgment' && item.onPlate && !item.zMoveType) {
 			if (value.itemModify(0)) moveType = item.onPlate;
 		}
+		if (move.id === 'fling' && item.onPlate && !item.zMoveType) {
+			if (value.itemModify(0)) moveType = item.onPlate;
+		}
 		if (move.id === 'technoblast' && item.onDrive) {
 			if (value.itemModify(0)) moveType = item.onDrive;
 		}
@@ -1690,6 +1696,9 @@ export class BattleTooltips {
 			if (isSound && value.abilityModify(0, 'Liquid Voice')) {
 				moveType = 'Water';
 			}
+			if (isSound && value.abilityModify(0, 'Rock Star')) {
+				moveType = 'Rock';
+			}
 		}
 
 		if (move.id === 'photongeyser' || move.id === 'lightthatburnsthesky' ||
@@ -1752,10 +1761,76 @@ export class BattleTooltips {
 	// Gets the current accuracy for a move.
 	getMoveAccuracy(move: Dex.Move, value: ModifiableValue, target?: Pokemon) {
 		value.reset(move.accuracy === true ? 0 : move.accuracy, true);
-
 		let pokemon = value.pokemon;
+		let moveType = move.type;
+		
+		if (move.id === 'judgment' || move.id === 'fling') {
+			if (value.tryItem('Fist Plate')) {
+				moveType = 'Fighting';
+			} else if (value.tryItem('Sky Plate')) {
+				moveType = 'Flying';
+			} else if (value.tryItem('Toxic Plate')) {
+				moveType = 'Poison';
+			} else if (value.tryItem('Earth Plate')) {
+				moveType = 'Ground';
+			} else if (value.tryItem('Stone Plate')) {
+				moveType = 'Rock';
+			} else if (value.tryItem('Insect Plate')) {
+				moveType = 'Bug';
+			} else if (value.tryItem('Spooky Plate')) {
+				moveType = 'Ghost';
+			} else if (value.tryItem('Iron Plate')) {
+				moveType = 'Steel';
+			} else if (value.tryItem('Flame Plate')) {
+				moveType = 'Fire';
+			} else if (value.tryItem('Splash Plate')) {
+				moveType = 'Water';
+			} else if (value.tryItem('Meadow Plate')) {
+				moveType = 'Grass';
+			} else if (value.tryItem('Zap Plate')) {
+				moveType = 'Electric';
+			} else if (value.tryItem('Mind Plate')) {
+				moveType = 'Psychic';
+			} else if (value.tryItem('Icicle Plate')) {
+				moveType = 'Ice';
+			} else if (value.tryItem('Draco Plate')) {
+				moveType = 'Dragon';
+			} else if (value.tryItem('Dread Plate')) {
+				moveType = 'Dark';
+			} else {
+				moveType = (move.id === 'judgment') ? 'Normal' : 'Dark';
+			}
+		} else if (value.tryAbility('Normalize')) {
+			moveType = 'Normal';
+		}
+		if (move.id === 'hiddenpower') {
+			moveType = pokemon.hpType || 'Dark';
+		}
+		if (value.tryAbility('Rock Star') && move.flags['sound']) {
+			moveType = 'Rock';
+		}
+		if (move.id === 'weatherball') {
+			switch (this.battle.weather) {
+			case 'sunnyday':
+			case 'desolateland':
+				moveType = 'Fire';
+				break;
+			case 'raindance':
+			case 'primordialsea':
+				moveType = 'Water';
+				break;
+			case 'sandstorm':
+				moveType = 'Rock';
+				break;
+			case 'hail':
+			case 'snowscape':
+				moveType = 'Ice';
+				break;
+			}
+		}
+		
 		// Sure-hit accuracy
-		if (move.id === 'toxic' && this.battle.gen >= 6 && this.pokemonHasType(pokemon, 'Poison')) {
+		if (move.id === 'toxic' && this.pokemonHasType(pokemon, 'Poison')) {
 			value.set(0, "Poison type");
 			return value;
 		}
@@ -1796,6 +1871,17 @@ export class BattleTooltips {
 		// Accuracy modifiers start
 
 		let accuracyModifiers = [];
+		
+		if (this.pokemonHasType(pokemon, moveType)) {
+			accuracyModifiers.push(4505);
+			value.modify(1.1, "STAB Boost");
+		}
+		
+		if (this.battle.weather === 'sandstorm' && moveType === 'Rock') {
+			accuracyModifiers.push(4505);
+			value.modify(1.1, "Sandstorm");
+		}
+		
 		if (this.battle.hasPseudoWeather('Gravity')) {
 			accuracyModifiers.push(6840);
 			value.modify(5 / 3, "Gravity");
@@ -2056,7 +2142,7 @@ export class BattleTooltips {
 		// Moves which have base power changed due to items
 		if (serverPokemon.item) {
 			let item = this.battle.dex.items.get(serverPokemon.item);
-			if (move.id === 'fling' && item.fling) {
+			if (move.id === 'fling' && item.fling && item.fling.basePower) {
 				value.itemModify(item.fling.basePower);
 			}
 			if (move.id === 'naturalgift') {
@@ -2067,8 +2153,8 @@ export class BattleTooltips {
 		if (['lowkick', 'grassknot', 'heavyslam', 'heatcrash'].includes(move.id) && this.battle.gen > 2) {
 			let isGKLK = ['lowkick', 'grassknot'].includes(move.id);
 			if (target) {
-				let targetWeight = target.getWeightKg();
-				let pokemonWeight = pokemon.getWeightKg(serverPokemon);
+				let targetWeight = (this.battle.hasPseudoWeather('Gravity')) ? target.getWeightKg() * 2 : target.getWeightKg();
+				let pokemonWeight = (this.battle.hasPseudoWeather('Gravity')) ? pokemon.getWeightKg(serverPokemon) * 2 : pokemon.getWeightKg(serverPokemon);
 				let basePower;
 				if (isGKLK) {
 					basePower = 20;
@@ -2107,7 +2193,7 @@ export class BattleTooltips {
 			value.abilityModify(1.5, "Flare Boost");
 		}
 		if (move.flags['punch']) {
-			value.abilityModify(1.2, 'Iron Fist');
+			value.abilityModify(1.3, 'Iron Fist');
 		}
 		if (move.flags['pulse']) {
 			value.abilityModify(1.5, "Mega Launcher");
@@ -2133,6 +2219,9 @@ export class BattleTooltips {
 		if (move.flags['sound']) {
 			value.abilityModify(1.3, "Punk Rock");
 		}
+		if (move.flags['sound']) {
+			value.abilityModify(1.5, 'Rock Star');
+		}
 		if (move.flags['slicing']) {
 			value.abilityModify(1.5, "Sharpness");
 		}
@@ -2142,10 +2231,8 @@ export class BattleTooltips {
 			}
 		}
 		if (target) {
-			if (["MF", "FM"].includes(pokemon.gender + target.gender)) {
-				value.abilityModify(0.75, "Rivalry");
-			} else if (["MM", "FF"].includes(pokemon.gender + target.gender)) {
-				value.abilityModify(1.25, "Rivalry");
+			if (["MM", "FF"].includes(pokemon.gender + target.gender)) {
+				value.abilityModify(1.5, "Rivalry");
 			}
 		}
 		const noTypeOverride = [
@@ -2162,9 +2249,7 @@ export class BattleTooltips {
 				value.abilityModify(this.battle.gen > 6 ? 1.2 : 1.3, "Pixilate");
 				value.abilityModify(this.battle.gen > 6 ? 1.2 : 1.3, "Refrigerate");
 			}
-			if (this.battle.gen > 6) {
-				value.abilityModify(1.2, "Normalize");
-			}
+			value.abilityModify(1.2, "Normalize");
 		}
 		if (move.recoil || move.hasCrashDamage) {
 			value.abilityModify(1.2, 'Reckless');
@@ -2463,6 +2548,10 @@ export class BattleTooltips {
 			itemName === 'Wise Glasses' && move.category === 'Special' ||
 			itemName === 'Punching Glove' && move.flags['punch']) {
 			value.itemModify(1.1);
+		}
+		
+		if (itemName === 'Loaded Gloves' && move.flags['punch']) {
+			value.itemModify(1.2);
 		}
 
 		return value;

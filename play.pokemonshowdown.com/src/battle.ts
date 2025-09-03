@@ -709,7 +709,7 @@ export class Side {
 			this.sideConditions[condition] = [effect.name, 1, 5, 0];
 			break;
 		case 'tailwind':
-			this.sideConditions[condition] = [effect.name, 1, this.battle.gen >= 5 ? persist ? 6 : 4 : persist ? 5 : 3, 0];
+			this.sideConditions[condition] = [effect.name, 1, this.battle.gen >= 4 ? persist ? 6 : 4 : persist ? 5 : 3, 0];
 			break;
 		case 'luckychant':
 			this.sideConditions[condition] = [effect.name, 1, 5, 0];
@@ -1419,9 +1419,9 @@ export class Battle {
 			if (poke) {
 				if (ability) {
 					this.activateAbility(poke, ability.name);
-				}
-				this.weatherTimeLeft = (this.gen <= 5 || isExtremeWeather) ? 0 : 8;
-				this.weatherMinTimeLeft = (this.gen <= 5 || isExtremeWeather) ? 0 : 5;
+				} 
+				this.weatherTimeLeft = (weather === 'raindance') ? 8 : 10;
+				this.weatherMinTimeLeft = (isExtremeWeather) ? 0 : 5;
 			} else if (isExtremeWeather) {
 				this.weatherTimeLeft = 0;
 				this.weatherMinTimeLeft = 0;
@@ -1438,27 +1438,7 @@ export class Battle {
 			'mist', 'lightscreen', 'reflect', 'spikes', 'safeguard', 'tailwind', 'toxicspikes', 'stealthrock', 'waterpledge', 'firepledge', 'grasspledge', 'stickyweb', 'auroraveil', 'gmaxsteelsurge', 'gmaxcannonade', 'gmaxvinelash', 'gmaxwildfire',
 		];
 		if (this.gameType === 'freeforall') {
-			// Court Change rotates side conditions clockwise in a free-for-all
-
-			// the list of all sides in clockwise order
-			const sides = [this.sides[0], this.sides[3], this.sides[1], this.sides[2]];
-			const temp: { [k: number]: Side["sideConditions"] } = { 0: {}, 1: {}, 2: {}, 3: {} };
-			for (const side of sides) {
-				for (const id in side.sideConditions) {
-					if (!sideConditions.includes(id)) continue;
-					temp[side.n][id] = side.sideConditions[id];
-					side.removeSideCondition(id);
-				}
-			}
-			for (let i = 0; i < 4; i++) {
-				const sourceSide = sides[i]; // the current side in rotation
-				const sourceSideConditions = temp[sourceSide.n];
-				const targetSide = sides[(i + 1) % 4]; // the next side in rotation
-				for (const id in sourceSideConditions) {
-					targetSide.sideConditions[id] = sourceSideConditions[id];
-					this.scene.addSideCondition(targetSide.n, id as ID);
-				}
-			}
+			// TODO: Add FFA support
 			return;
 		}
 		let side1 = this.sides[0];
@@ -2421,7 +2401,7 @@ export class Battle {
 				this.activateAbility(poke, oldAbility.name);
 				this.scene.wait(500);
 				this.activateAbility(poke, ability.name, true);
-				ofpoke?.rememberAbility(ability.name);
+				ofpoke!.rememberAbility(ability.name);
 			} else if (effect.id) {
 				switch (effect.id) {
 				case 'desolateland':
@@ -2730,6 +2710,11 @@ export class Battle {
 			case 'reflect':
 				this.scene.resultAnim(poke, 'Reflect', 'good');
 				break;
+				
+			// New
+			case 'stickybarbchip':
+				this.scene.resultAnim(poke, 'Sticky Barb', 'bad');
+				break;
 			}
 			if (!(effect.id === 'typechange' && poke.terastallized)) {
 				poke.addVolatile(effect.id);
@@ -2825,6 +2810,9 @@ export class Battle {
 					poke.removeVolatile('quarkdrivespa' as ID);
 					poke.removeVolatile('quarkdrivespd' as ID);
 					poke.removeVolatile('quarkdrivespe' as ID);
+					break;
+				case 'stickybarbchip':
+					this.scene.resultAnim(poke, 'Sticky Barb ended', 'good');
 					break;
 				default:
 					if (effect.effectType === 'Move') {
@@ -3117,6 +3105,11 @@ export class Battle {
 				if (this.gen > 6) maxTimeLeft = 8;
 			}
 			if (kwArgs.persistent) minTimeLeft += 2;
+			if (effect.id === 'gravity')
+			{
+				minTimeLeft = 4;
+				maxTimeLeft = 5;
+			}
 			this.addPseudoWeather(effect.name, minTimeLeft, maxTimeLeft);
 
 			switch (effect.id) {
