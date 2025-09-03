@@ -1906,8 +1906,6 @@ export class PokemonSprite extends Sprite {
 		// Gen 1
 		lightscreen: ['Light Screen', 'good'],
 		reflect: ['Reflect', 'good'],
-		// New
-		stickybarbchip: ['Sticky Barb', 'bad'],
 	};
 	forme = '';
 	cryurl: string | undefined = undefined;
