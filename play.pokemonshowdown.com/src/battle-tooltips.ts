@@ -1165,7 +1165,7 @@ export class BattleTooltips {
 			if (item !== 'utilityumbrella') {
 				if (weather === 'sunnyday' || weather === 'desolateland') {
 					if (ability === 'chlorophyll') {
-						speedModifiers.push(2);
+						speedModifiers.push(1.66);
 					}
 					if (ability === 'solarpower') {
 						stats.spa = Math.floor(stats.spa * 1.5);
@@ -1193,7 +1193,7 @@ export class BattleTooltips {
 				}
 				if (weather === 'raindance' || weather === 'primordialsea') {
 					if (ability === 'swiftswim') {
-						speedModifiers.push(2);
+						speedModifiers.push(1.66);
 					}
 				}
 			}
