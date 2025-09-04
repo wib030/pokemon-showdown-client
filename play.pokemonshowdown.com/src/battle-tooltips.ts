@@ -1160,7 +1160,7 @@ export class BattleTooltips {
 				speedModifiers.push(2);
 			}
 			if (ability === 'slushrush' && (weather === 'hail' || weather === 'snowscape')) {
-				speedModifiers.push(2);
+				speedModifiers.push(1.66);
 			}
 			if (item !== 'utilityumbrella') {
 				if (weather === 'sunnyday' || weather === 'desolateland') {
@@ -1282,6 +1282,10 @@ export class BattleTooltips {
 					break;
 				}
 			}
+		}
+		if (this.battle.weather === 'sandstorm' && ability === 'sandforce') {
+			stats.spa = Math.floor(stats.spa * 1.3);
+			stats.atk = Math.floor(stats.atk * 1.3);
 		}
 		if (item === 'assaultvest') {
 			stats.spd = Math.floor(stats.spd * 1.5);
@@ -2225,9 +2229,6 @@ export class BattleTooltips {
 		}
 		if (['psn', 'tox'].includes(pokemon.status) && move.category === 'Physical') {
 			value.abilityModify(1.5, "Toxic Boost");
-		}
-		if (['Rock', 'Ground', 'Steel'].includes(moveType) && this.battle.weather === 'sandstorm') {
-			if (value.tryAbility("Sand Force")) value.weatherModify(1.3, "Sandstorm", "Sand Force");
 		}
 		if (move.secondaries) {
 			value.abilityModify(1.3, "Sheer Force");
