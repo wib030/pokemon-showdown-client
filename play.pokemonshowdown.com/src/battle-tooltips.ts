@@ -1068,6 +1068,10 @@ export class BattleTooltips {
 			} else if (this.battle.gen < 2 && pokemon.status === 'brn') {
 				stats.atk = Math.floor(stats.atk * 0.5);
 			}
+			
+			if (pokemon.status === 'brn' && ability === 'flareboost') {
+				stats.spa = Math.floor(stats.spa * 1.5);
+			}
 
 			// Paralysis is calculated later in newer generations, so we need to apply it early here
 			if (this.battle.gen <= 2 && pokemon.status === 'par') {
@@ -1164,7 +1168,7 @@ export class BattleTooltips {
 			}
 			if (item !== 'utilityumbrella') {
 				if (weather === 'sunnyday' || weather === 'desolateland') {
-					if (ability === 'chlorophyll') {
+					if (ability === 'chlorophyll' || ability === 'chloroplast') {
 						speedModifiers.push(1.66);
 					}
 					if (ability === 'solarpower') {
@@ -2212,9 +2216,6 @@ export class BattleTooltips {
 		if (!value.value) return value;
 
 		// Other ability boosts
-		if (pokemon.status === 'brn' && move.category === 'Special') {
-			value.abilityModify(1.5, "Flare Boost");
-		}
 		if (move.flags['punch']) {
 			value.abilityModify(1.3, 'Iron Fist');
 		}
@@ -2266,6 +2267,10 @@ export class BattleTooltips {
 		if (moveType === 'Grass' && (pokemon.hp <= pokemon.maxhp / 2))
 		{
 			value.abilityModify(1.5, "Overgrow");
+		}
+		if (moveType === 'Grass')
+		{
+			value.abilityModify(1.5, "Chloroplast");
 		}
 		if (moveType === 'Water' && (pokemon.hp <= pokemon.maxhp / 2))
 		{
