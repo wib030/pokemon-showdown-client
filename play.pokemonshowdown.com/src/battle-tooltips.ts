@@ -2255,6 +2255,10 @@ export class BattleTooltips {
 				value.abilityModify(1.5, "Rivalry");
 			}
 		}
+		if (this.battle.hasPseudoWeather('Gravity'))
+		{
+			value.abilityModify(1.33, "Tidal Force");
+		}
 		if (moveType === 'Fire' && (pokemon.hp <= pokemon.maxhp / 2))
 		{
 			value.abilityModify(1.5, "Blaze");
