@@ -1169,6 +1169,7 @@ export class BattleTooltips {
 					}
 					if (ability === 'solarpower') {
 						stats.spa = Math.floor(stats.spa * 1.5);
+						stats.atk = Math.floor(stats.atk * 1.5);
 					}
 					if (ability === 'orichalcumpulse') {
 						stats.atk = Math.floor(stats.atk * 1.3333);
@@ -1254,16 +1255,30 @@ export class BattleTooltips {
 			stats.spa = Math.floor(stats.spa * 1.5);
 			stats.spd = Math.floor(stats.spd * 1.5);
 		}
-		if (clientPokemon && (ability === 'plus' || ability === 'minus')) {
+		if (clientPokemon && (ability === 'plus')) {
 			let allyActive = clientPokemon.side.active;
 			if (allyActive.length > 1) {
-				let abilityName = (ability === 'plus' ? 'Plus' : 'Minus');
+				let abilityName = 'Plus';
 				for (const ally of allyActive) {
 					if (!ally || ally === clientPokemon || ally.fainted) continue;
 					let allyAbility = this.getAllyAbility(ally);
-					if (allyAbility !== 'Plus' && allyAbility !== 'Minus') continue;
-					if (this.battle.gen <= 4 && allyAbility === abilityName) continue;
+					if (allyAbility !== 'Minus') continue;
 					stats.spa = Math.floor(stats.spa * 1.5);
+					stats.atk = Math.floor(stats.atk * 1.5);
+					break;
+				}
+			}
+		}
+		if (clientPokemon && (ability === 'minus')) {
+			let allyActive = clientPokemon.side.active;
+			if (allyActive.length > 1) {
+				let abilityName = 'Minus';
+				for (const ally of allyActive) {
+					if (!ally || ally === clientPokemon || ally.fainted) continue;
+					let allyAbility = this.getAllyAbility(ally);
+					if (allyAbility !== 'Plus') continue;
+					stats.spd = Math.floor(stats.spd * 1.5);
+					stats.def = Math.floor(stats.def * 1.5);
 					break;
 				}
 			}
@@ -1894,6 +1909,10 @@ export class BattleTooltips {
 				accuracyModifiers.push(4506);
 				value.modify(1.1, "Victory Star");
 			}
+			if (ability === 'Illuminate') {
+				accuracyModifiers.push(4916);
+				value.modify(1.2, "Illuminate");
+			}
 		}
 
 		if (value.tryAbility('Hustle') && move.category === 'Physical') {
@@ -2234,6 +2253,22 @@ export class BattleTooltips {
 			if (["MM", "FF"].includes(pokemon.gender + target.gender)) {
 				value.abilityModify(1.5, "Rivalry");
 			}
+		}
+		if (moveType === 'Fire' && (pokemon.hp <= pokemon.maxhp / 2))
+		{
+			value.abilityModify(1.5, "Blaze");
+		}
+		if (moveType === 'Grass' && (pokemon.hp <= pokemon.maxhp / 2))
+		{
+			value.abilityModify(1.5, "Overgrow");
+		}
+		if (moveType === 'Water' && (pokemon.hp <= pokemon.maxhp / 2))
+		{
+			value.abilityModify(1.5, "Torrent");
+		}
+		if (moveType === 'Bug' && (pokemon.hp <= pokemon.maxhp / 2))
+		{
+			value.abilityModify(1.5, "Swarm");
 		}
 		const noTypeOverride = [
 			'judgment', 'multiattack', 'naturalgift', 'revelationdance', 'struggle', 'technoblast', 'terrainpulse', 'weatherball',
