@@ -740,11 +740,6 @@ export const Dex = new class implements ModdedDex {
 			if (spriteData.gen >= 4 && miscData['frontf'] && options.gender === 'F') {
 				name += '-f';
 			}
-			
-			if (name === 'castform-sandy') {
-				spriteData.url = '/sprites/' + dir + '/' + name + '.gif';
-				return spriteData;
-			}
 
 			spriteData.url += dir + '/' + name + '.png';
 		}
