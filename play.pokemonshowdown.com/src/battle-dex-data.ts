@@ -187,6 +187,7 @@ export const BattlePokemonIconIndexes: { [id: string]: number } = {
 	castformrainy: 1032 + 35,
 	castformsnowy: 1032 + 36,
 	castformsunny: 1032 + 37,
+	castformsandy: 1032 + 36,
 	deoxysattack: 1032 + 38,
 	deoxysdefense: 1032 + 39,
 	deoxysspeed: 1032 + 40,
