@@ -1406,6 +1406,8 @@ export interface AbilityFlags {
 	notrace?: 1;
 	/** Disables the Ability if the user is Transformed */
 	notransform?: 1;
+	/** Ability can be rolled by Dabble/Genetic Freak */
+	rollable?: 1;
 }
 
 export class Ability implements Effect {
