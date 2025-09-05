@@ -229,8 +229,8 @@ export const Dex = new class implements ModdedDex {
 
 	pokeballs: string[] | null = null;
 	
-	resourcePrefix = 'https://raw.githubusercontent.com/wib030/pokemon-sprites/';
-	fxPrefix = 'https://raw.githubusercontent.com/wib030/pokemon-sprites/fx/';
+	resourcePrefix = 'https://raw.githubusercontent.com/wib030/pokemon-sprites/main/';
+	fxPrefix = 'https://raw.githubusercontent.com/wib030/pokemon-sprites/main/fx/';
 
 	loadedSpriteData = { xy: 1, bw: 0 };
 	moddedDexes: { [mod: string]: ModdedDex } = {};
