@@ -741,7 +741,7 @@ export const Dex = new class implements ModdedDex {
 				name += '-f';
 			}
 			
-			if (name === 'castform-sandy') {
+			if (name === 'castformsandy') {
 				spriteData.url = '/sprites/' + dir + '/' + name + '.gif';
 				return spriteData;
 			}
