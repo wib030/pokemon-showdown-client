@@ -1420,6 +1420,9 @@ export class BattleTooltips {
 		if (sideConditions['tailwind']) {
 			speedModifiers.push(2);
 		}
+		if (sideConditions['deepsnow']) {
+			speedModifiers.push(0.5);
+		}
 		if (sideConditions['grasspledge']) {
 			speedModifiers.push(0.25);
 		}
