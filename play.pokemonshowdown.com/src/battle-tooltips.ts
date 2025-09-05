@@ -2283,6 +2283,10 @@ export class BattleTooltips {
 		{
 			value.abilityModify(1.5, "Swarm");
 		}
+		if (moveType === 'Psychic' && (pokemon.hp <= pokemon.maxhp / 2))
+		{
+			value.abilityModify(2, "Headache");
+		}
 		const noTypeOverride = [
 			'judgment', 'multiattack', 'naturalgift', 'revelationdance', 'struggle', 'technoblast', 'terrainpulse', 'weatherball',
 		];
