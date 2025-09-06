@@ -2715,6 +2715,9 @@ export class Battle {
 			case 'stickybarbchip':
 				this.scene.resultAnim(poke, 'Sticky Barb', 'bad');
 				break;
+			case 'deepsnow':
+				this.scene.resultAnim(poke, 'Deep Snow', 'bad');
+				break;
 			}
 			if (!(effect.id === 'typechange' && poke.terastallized)) {
 				poke.addVolatile(effect.id);
@@ -2813,6 +2816,9 @@ export class Battle {
 					break;
 				case 'stickybarbchip':
 					this.scene.resultAnim(poke, 'Sticky Barb ended', 'good');
+					break;
+				case 'deepsnow':
+					this.scene.resultAnim(poke, 'Deep Snow ended', 'good');
 					break;
 				default:
 					if (effect.effectType === 'Move') {

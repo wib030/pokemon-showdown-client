@@ -1420,7 +1420,7 @@ export class BattleTooltips {
 		if (sideConditions['tailwind']) {
 			speedModifiers.push(2);
 		}
-		if (sideConditions['deepsnow']) {
+		if (sideConditions['deepsnow'] && !this.pokemonHasType(pokemon, 'Ice')) {
 			speedModifiers.push(0.5);
 		}
 		if (sideConditions['grasspledge']) {
