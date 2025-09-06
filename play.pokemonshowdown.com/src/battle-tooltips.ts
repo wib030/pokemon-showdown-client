@@ -2574,7 +2574,7 @@ export class BattleTooltips {
 		if (item.name === 'Soul Dew' && this.battle.gen < 7) return value;
 		if (BattleTooltips.orbUsers[speciesName]?.includes(item.name) &&
 			BattleTooltips.orbTypes[item.name]?.includes(moveType)) {
-			value.itemModify(1.2);
+			value.itemModify(1.3);
 			return value;
 		}
 		if (speciesName === 'Ogerpon') {
