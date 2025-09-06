@@ -709,7 +709,7 @@ export class Side {
 			this.sideConditions[condition] = [effect.name, 1, 5, 0];
 			break;
 		case 'deepsnow':
-			this.sideConditions[condition] = [effect.name, 1, 5, 0];
+			this.sideConditions[condition] = [effect.name, 0, 0, 0];
 			break;
 		case 'tailwind':
 			this.sideConditions[condition] = [effect.name, 1, this.battle.gen >= 4 ? persist ? 6 : 4 : persist ? 5 : 3, 0];
