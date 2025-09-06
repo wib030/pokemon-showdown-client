@@ -1228,7 +1228,7 @@ export class BattleScene implements BattleSceneStub {
 			});
 			break;
 		case 'deepsnow':
-			const mist = new Sprite(BattleEffects.mist, {
+			const deepsnow = new Sprite(BattleEffects.mist, {
 				display: 'block',
 				x,
 				y,
@@ -1237,9 +1237,9 @@ export class BattleScene implements BattleSceneStub {
 				yscale: 0,
 				opacity: 0.1,
 			}, this);
-			this.$spritesFront[spriteIndex].append(mist.$el);
-			this.sideConditions[siden][id] = [mist];
-			mist.anim({
+			this.$spritesFront[spriteIndex].append(deepsnow.$el);
+			this.sideConditions[siden][id] = [deepsnow];
+			deepsnow.anim({
 				opacity: 0.7,
 				time: instant ? 0 : 400,
 			}).anim({
