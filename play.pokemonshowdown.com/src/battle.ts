@@ -708,6 +708,9 @@ export class Side {
 		case 'mist':
 			this.sideConditions[condition] = [effect.name, 1, 5, 0];
 			break;
+		case 'deepsnow':
+			this.sideConditions[condition] = [effect.name, 1, 5, 0];
+			break;
 		case 'tailwind':
 			this.sideConditions[condition] = [effect.name, 1, this.battle.gen >= 4 ? persist ? 6 : 4 : persist ? 5 : 3, 0];
 			break;
@@ -2715,9 +2718,6 @@ export class Battle {
 			case 'stickybarbchip':
 				this.scene.resultAnim(poke, 'Sticky Barb', 'bad');
 				break;
-			case 'deepsnow':
-				this.scene.resultAnim(poke, 'Deep Snow', 'bad');
-				break;
 			}
 			if (!(effect.id === 'typechange' && poke.terastallized)) {
 				poke.addVolatile(effect.id);
@@ -3054,6 +3054,7 @@ export class Battle {
 			case 'lightscreen':
 			case 'safeguard':
 			case 'mist':
+			case 'deepsnow':
 			case 'gmaxwildfire':
 			case 'gmaxvolcalith':
 			case 'gmaxvinelash':

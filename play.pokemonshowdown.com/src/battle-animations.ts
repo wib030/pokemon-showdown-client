@@ -1227,6 +1227,26 @@ export class BattleScene implements BattleSceneStub {
 				time: instant ? 0 : 300,
 			});
 			break;
+		case 'deepsnow':
+			const mist = new Sprite(BattleEffects.mist, {
+				display: 'block',
+				x,
+				y,
+				z: side.behind(-27),
+				xscale: 1,
+				yscale: 0,
+				opacity: 0.1,
+			}, this);
+			this.$spritesFront[spriteIndex].append(mist.$el);
+			this.sideConditions[siden][id] = [mist];
+			mist.anim({
+				opacity: 0.7,
+				time: instant ? 0 : 400,
+			}).anim({
+				opacity: 0.3,
+				time: instant ? 0 : 300,
+			});
+			break;
 		case 'stealthrock':
 			const rock1 = new Sprite(BattleEffects.rock1, {
 				display: 'block',
@@ -1908,7 +1928,6 @@ export class PokemonSprite extends Sprite {
 		reflect: ['Reflect', 'good'],
 		// New
 		stickybarbchip: ['Sticky Barb', 'bad'],
-		deepsnow: ['Deep Snow', 'bad'],
 	};
 	forme = '';
 	cryurl: string | undefined = undefined;
@@ -3186,6 +3205,10 @@ const BattleEffects: { [k: string]: SpriteData } = {
 	},
 	mist: {
 		rawHTML: '<div class="sidecondition-mist" style="display:none;position:absolute" />',
+		w: 100, h: 50,
+	},
+	deepsnow: {
+		rawHTML: '<div class="sidecondition-deepsnow" style="display:none;position:absolute" />',
 		w: 100, h: 50,
 	},
 };
