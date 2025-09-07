@@ -1860,6 +1860,10 @@ export class BattleTooltips {
 			value.set(0, "Poison type");
 			return value;
 		}
+		if (move.id === 'thunderwave' && this.pokemonHasType(pokemon, 'Electric')) {
+			value.set(0, "Electric type");
+			return value;
+		}
 		if (move.id === 'blizzard' && this.battle.gen >= 4) {
 			value.weatherModify(0, 'Hail');
 			value.weatherModify(0, 'Snowscape');
