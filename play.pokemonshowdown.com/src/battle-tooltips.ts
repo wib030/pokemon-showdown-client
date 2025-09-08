@@ -1729,6 +1729,7 @@ export class BattleTooltips {
 
 		if (move.id === 'photongeyser' || move.id === 'lightthatburnsthesky' ||
 			(move.id === 'terablast' && pokemon.terastallized) ||
+			(move.id === 'judgment') ||
 			(move.id === 'terastarstorm' && pokemon.getSpeciesForme() === 'Terapagos-Stellar')) {
 			const stats = this.calculateModifiedStats(pokemon, serverPokemon, true);
 			if (stats.atk > stats.spa) category = 'Physical';
@@ -2192,7 +2193,7 @@ export class BattleTooltips {
 				let basePower;
 				if (isGKLK) {
 					basePower = 20;
-					if (targetWeight >= 200) basePower = 120;
+					if (targetWeight >= 200) basePower = 150;
 					else if (targetWeight >= 100) basePower = 100;
 					else if (targetWeight >= 50) basePower = 80;
 					else if (targetWeight >= 25) basePower = 60;
