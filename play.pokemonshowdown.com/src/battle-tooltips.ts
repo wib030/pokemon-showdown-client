@@ -1869,6 +1869,10 @@ export class BattleTooltips {
 			value.weatherModify(0, 'Hail');
 			value.weatherModify(0, 'Snowscape');
 		}
+		if (move.id === 'hailcannon') {
+			value.weatherModify(0, 'Hail');
+			value.weatherModify(0, 'Snowscape');
+		}
 		if (['hurricane', 'thunder', 'bleakwindstorm', 'wildboltstorm', 'sandsearstorm'].includes(move.id)) {
 			value.weatherModify(0, 'Rain Dance');
 			value.weatherModify(0, 'Primordial Sea');
