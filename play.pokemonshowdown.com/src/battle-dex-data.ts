@@ -638,7 +638,6 @@ export const BattlePokemonIconIndexesLeft: { [id: string]: number } = {
 	clefable: 1404 + 3,
 	jigglypuff: 1404 + 4,
 	wigglytuff: 1404 + 5,
-	wibblypuff: 1404 + 4,
 	dugtrioalola: 1404 + 6,
 	poliwhirl: 1404 + 7,
 	poliwrath: 1404 + 8,
