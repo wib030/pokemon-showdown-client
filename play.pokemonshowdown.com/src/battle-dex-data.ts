@@ -631,8 +631,8 @@ export const BattlePokemonIconIndexes: { [id: string]: number } = {
 	ramnarokradiant: 1512 + 79,
 	
 	// New icons
-	wibblypuff: 1592 + 0,
-	megamarill: 1592 + 1,
+	wibblypuff: 1597 + 0,
+	megamarill: 1597 + 1,
 };
 
 export const BattlePokemonIconIndexesLeft: { [id: string]: number } = {
