@@ -2724,6 +2724,9 @@ export class Battle {
 			case 'mindvirus':
 				this.scene.resultAnim(poke, 'Mind Virus', 'bad');
 				break;
+			case 'strangleweed':
+				this.scene.resultAnim(poke, 'Strangle Weed', 'bad');
+				break;
 			}
 			if (!(effect.id === 'typechange' && poke.terastallized)) {
 				poke.addVolatile(effect.id);
@@ -2828,6 +2831,9 @@ export class Battle {
 					break;
 				case 'mindvirus':
 					this.scene.resultAnim(poke, 'Mind Virus ended', 'good');
+					break;
+				case 'strangleweed':
+					this.scene.resultAnim(poke, 'Strangle Weed ended', 'good');
 					break;
 				default:
 					if (effect.effectType === 'Move') {
