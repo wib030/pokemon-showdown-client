@@ -2053,7 +2053,7 @@ export class BattleTooltips {
 			value.modify(2, 'Brine + target below half HP');
 		}
 		if (move.id === 'eruption' || move.id === 'waterspout' || move.id === 'dragonenergy') {
-			value.set(Math.floor(150 * pokemon.hp / pokemon.maxhp) || 1);
+			value.set(Math.floor(140 * pokemon.hp / pokemon.maxhp) || 1);
 		}
 		if (move.id === 'facade' && !['', 'frz'].includes(pokemon.status)) {
 			value.modify(2, 'Facade + status');
