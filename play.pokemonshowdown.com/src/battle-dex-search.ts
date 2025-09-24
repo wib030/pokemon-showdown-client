@@ -1676,6 +1676,8 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 			return abilityid === 'relentless';
 		case 'hyperbeam':
 			return abilityid === 'relentless';
+		case 'snap':
+			return abilityid === 'strongjaw';
 		}
 
 		if (this.isDoubles && BattleMoveSearch.GOOD_DOUBLES_MOVES.includes(id)) {
