@@ -1209,6 +1209,7 @@ export class BattleTooltips {
 		if (clientPokemon) {
 			if (clientPokemon.volatiles['slowstart']) {
 				stats.atk = Math.floor(stats.atk * 0.5);
+				stats.spa = Math.floor(stats.spa * 0.5);
 				speedModifiers.push(0.5);
 			}
 			if (ability === 'unburden' && clientPokemon.volatiles['itemremoved'] && !item) {
