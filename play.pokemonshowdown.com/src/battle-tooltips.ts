@@ -1421,7 +1421,7 @@ export class BattleTooltips {
 		if (sideConditions['tailwind']) {
 			speedModifiers.push(2);
 		}
-		if (sideConditions['deepsnow'] && !this.pokemonHasType(pokemon, 'Ice') && pokemon.isGrounded(serverPokemon)) {
+		if (sideConditions['deepsnow'] && !this.pokemonHasType(pokemon, 'Ice') && pokemon.isGrounded()) {
 			speedModifiers.push(0.5);
 		}
 		if (sideConditions['grasspledge']) {
@@ -2038,7 +2038,7 @@ export class BattleTooltips {
 				value.modify(2, "Acrobatics + no item");
 			}
 		}
-		let variableBPCap = ['crushgrip', 'wringout'].includes(move.id) ? 120 : move.id === 'hardpress' ? 100 : undefined;
+		let variableBPCap = move.id === 'crushgrip' ? 160 : move.id === 'wringout' ? 120 : move.id === 'hardpress' ? 100 : undefined;
 		if (variableBPCap && target) {
 			value.set(
 				Math.floor(
