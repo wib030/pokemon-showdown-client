@@ -1421,11 +1421,7 @@ export class BattleTooltips {
 		if (sideConditions['tailwind']) {
 			speedModifiers.push(2);
 		}
-		let deepSnowGrounded = false;
-		if (clientPokemon) {
-			deepSnowGrounded = clientPokemon.isGrounded(serverPokemon);
-		}
-		if (sideConditions['deepsnow'] && !this.pokemonHasType(pokemon, 'Ice') && deepSnowGrounded) {
+		if (sideConditions['deepsnow'] && !this.pokemonHasType(pokemon, 'Ice') && clientPokemon?.isGrounded(serverPokemon)) {
 			speedModifiers.push(0.5);
 		}
 		if (sideConditions['grasspledge']) {
