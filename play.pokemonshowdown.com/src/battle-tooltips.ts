@@ -1422,8 +1422,8 @@ export class BattleTooltips {
 			speedModifiers.push(2);
 		}
 		let deepSnowGrounded = false;
-		if (serverPokemon) {
-			deepSnowGrounded = pokemon.isGrounded(serverPokemon);
+		if (clientPokemon) {
+			deepSnowGrounded = clientPokemon.isGrounded(serverPokemon);
 		}
 		if (sideConditions['deepsnow'] && !this.pokemonHasType(pokemon, 'Ice') && deepSnowGrounded) {
 			speedModifiers.push(0.5);
