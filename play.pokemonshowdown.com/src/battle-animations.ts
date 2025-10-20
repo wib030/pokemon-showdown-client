@@ -1253,7 +1253,7 @@ export class BattleScene implements BattleSceneStub {
 				x: x + side.leftof(-40),
 				y: y - 10,
 				z: side.z,
-				opacity: 0.5,
+				opacity: 1,
 				scale: 0.2,
 			}, this);
 
@@ -1262,7 +1262,7 @@ export class BattleScene implements BattleSceneStub {
 				x: x + side.leftof(-20),
 				y: y - 40,
 				z: side.z,
-				opacity: 0.5,
+				opacity: 1,
 				scale: 0.2,
 			}, this);
 
@@ -1271,7 +1271,7 @@ export class BattleScene implements BattleSceneStub {
 				x: x + side.leftof(30),
 				y: y - 20,
 				z: side.z,
-				opacity: 0.5,
+				opacity: 1,
 				scale: 0.2,
 			}, this);
 
@@ -1280,7 +1280,7 @@ export class BattleScene implements BattleSceneStub {
 				x: x + side.leftof(10),
 				y: y - 30,
 				z: side.z,
-				opacity: 0.5,
+				opacity: 1,
 				scale: 0.2,
 			}, this);
 
