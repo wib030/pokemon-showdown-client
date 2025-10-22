@@ -1113,12 +1113,6 @@ export class BattleTooltips {
 			stats.spa *= 2;
 		}
 
-		if (item === 'thickclub') {
-			if (speciesName === 'Marowak' || speciesName === 'Cubone') {
-				stats.atk *= 2;
-			}
-		}
-
 		if (speciesName === 'Ditto' && !(clientPokemon && 'transform' in clientPokemon.volatiles)) {
 			if (item === 'quickpowder') {
 				speedModifiers.push(2);
@@ -2617,6 +2611,10 @@ export class BattleTooltips {
 		
 		if (itemName === 'Loaded Gloves' && move.flags['punch']) {
 			value.itemModify(1.2);
+		}
+		
+		if (itemName === 'Thick Club' && (speciesName === 'Marowak' || speciesName === 'Cubone') && ['boneclub', 'bonemerang', 'bonerush'].includes(move.id)) {
+			value.itemModify(2);
 		}
 
 		return value;
