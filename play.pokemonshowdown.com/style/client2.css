@@ -1080,10 +1080,10 @@ form.menugroup {
 	position: absolute;
 	right: -30px;
 	bottom: -10px;
-	background: url(https://play.pokemonshowdown.com/sprites/gen5/jigglypuff.png) center no-repeat;
+	background: url(https://play.pokemonshowdown.com/sprites/gen5-shiny/jigglypuff.png) center no-repeat;
 }
 .roomcounters .button:hover .battlecount {
-	background: url(https://play.pokemonshowdown.com/sprites/gen5ani/jigglypuff.gif) center no-repeat;
+	background: url(https://play.pokemonshowdown.com/sprites/gen5ani-shiny/jigglypuff.gif) center no-repeat;
 }
 
 .roomlist {
