@@ -1429,7 +1429,7 @@ export class Battle {
 				this.weatherTimeLeft = 0;
 				this.weatherMinTimeLeft = 0;
 			} else {
-				this.weatherTimeLeft = (this.gen <= 3 ? 5 : 8);
+				this.weatherTimeLeft = (weather === 'raindance') ? 8 : 10;
 				this.weatherMinTimeLeft = (this.gen <= 3 ? 0 : 5);
 			}
 		}
