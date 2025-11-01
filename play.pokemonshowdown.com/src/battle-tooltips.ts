@@ -1441,8 +1441,8 @@ export class BattleTooltips {
 		const isTransformed = clientPokemon?.volatiles.transform;
 		if (!serverPokemon || isTransformed) {
 			if (!clientPokemon) throw new Error('Must pass either clientPokemon or serverPokemon');
-			let [min, neutral, max] = this.getSpeedRange(clientPokemon);
-			return `<p><small>Spe</small> ${min} to ${neutral} to ${max} <small>(before items/abilities/modifiers)</small></p>`;
+			let [min, neutral, max, scarf] = this.getSpeedRange(clientPokemon);
+			return `<p><small>Spe</small> 0-: ${min}, 0: ${neutral}, 252+: ${max}, Max +1: ${scarf} <small>(before items/abilities/modifiers)</small></p>`;
 		}
 		const stats = serverPokemon.stats;
 		const modifiedStats = this.calculateModifiedStats(clientPokemon, serverPokemon);
@@ -1518,7 +1518,7 @@ export class BattleTooltips {
 	/**
 	 * Calculates possible Speed stat range of an opponent
 	 */
-	getSpeedRange(pokemon: Pokemon): [number, number, number] {
+	getSpeedRange(pokemon: Pokemon): [number, number, number, number] {
 		const tr = Math.trunc || Math.floor;
 		const species = pokemon.getSpecies();
 		let rules = this.battle.rules;
@@ -1571,10 +1571,11 @@ export class BattleTooltips {
 		} else {
 			let maxIvEvOffset = maxIv + 63;
 			max = tr(tr((2 * baseSpe + maxIvEvOffset) * level / 100 + 5) * maxNature);
+			scarf = tr(tr(tr((2 * baseSpe + maxIvEvOffset) * level / 100 + 5) * maxNature) * 1.5);
 			neutral = tr((2 * baseSpe + maxIv) * level / 100 + 5);
 			min = isCGT ? max : tr(tr(2 * baseSpe * level / 100 + 5) * minNature);
 		}
-		return [min, neutral, max];
+		return [min, neutral, max, scarf];
 	}
 
 	/**
@@ -2148,7 +2149,7 @@ export class BattleTooltips {
 		}
 		// Moves that check opponent speed
 		if (move.id === 'electroball' && target) {
-			let [minSpe, neutralSpe, maxSpe] = this.getSpeedRange(target);
+			let [minSpe, neutralSpe, maxSpe, scarfSpe] = this.getSpeedRange(target);
 			let minRatio = (modifiedStats.spe / maxSpe);
 			let maxRatio = (modifiedStats.spe / minSpe);
 			let min;
@@ -2169,7 +2170,7 @@ export class BattleTooltips {
 			value.setRange(min, max);
 		}
 		if (move.id === 'gyroball' && target) {
-			let [minSpe, neutralSpe, maxSpe] = this.getSpeedRange(target);
+			let [minSpe, neutralSpe, maxSpe, scarfSpe] = this.getSpeedRange(target);
 			let min = (Math.floor(25 * minSpe / modifiedStats.spe) || 1);
 			if (min > 150) min = 150;
 			let max = (Math.floor(25 * maxSpe / modifiedStats.spe) || 1);
