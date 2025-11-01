@@ -1562,16 +1562,18 @@ export class BattleTooltips {
 		let min;
 		let neutral;
 		let max;
+		let scarf;
 		if (tier.includes("Let's Go")) {
 			min = tr(tr(tr(2 * baseSpe * level / 100 + 5) * minNature) * tr((70 / 255 / 10 + 1) * 100) / 100);
 			neutral = tr(tr(tr((2 * baseSpe + maxIv) * level / 100 + 5)) * tr((70 / 255 / 10 + 1) * 100) / 100);
 			max = tr(tr(tr((2 * baseSpe + maxIv) * level / 100 + 5) * maxNature) * tr((70 / 255 / 10 + 1) * 100) / 100);
+			scarf = tr(max  * 1.5);
 			if (tier.includes('No Restrictions')) max += 200;
 			else if (tier.includes('Random')) max += 20;
 		} else {
 			let maxIvEvOffset = maxIv + 63;
 			max = tr(tr((2 * baseSpe + maxIvEvOffset) * level / 100 + 5) * maxNature);
-			scarf = tr(tr(tr((2 * baseSpe + maxIvEvOffset) * level / 100 + 5) * maxNature) * 1.5);
+			scarf = tr(max  * 1.5);
 			neutral = tr((2 * baseSpe + maxIv) * level / 100 + 5);
 			min = isCGT ? max : tr(tr(2 * baseSpe * level / 100 + 5) * minNature);
 		}
