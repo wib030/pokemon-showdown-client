@@ -1442,7 +1442,7 @@ export class BattleTooltips {
 		if (!serverPokemon || isTransformed) {
 			if (!clientPokemon) throw new Error('Must pass either clientPokemon or serverPokemon');
 			let [min, neutral, max, scarf] = this.getSpeedRange(clientPokemon);
-			return `<p><small>Speed:</small> 0-: ${min}, 0: ${neutral}, 252+: ${max}, Max +1: ${scarf} <small>(before items/abilities/modifiers)</small></p>`;
+			return `<p><small>Spe</small> 0-: ${min}, 0: ${neutral}, 252+: ${max}, Max +1: ${scarf} <small>(before items/abilities/modifiers)</small></p>`;
 		}
 		const stats = serverPokemon.stats;
 		const modifiedStats = this.calculateModifiedStats(clientPokemon, serverPokemon);
