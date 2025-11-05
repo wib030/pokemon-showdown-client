@@ -12,6 +12,13 @@ npm-debug.log
 /play.pokemonshowdown.com/sprites/
 /play.pokemonshowdown.com/audio/
 
+!/play.pokemonshowdown.com/sprites/gen4/
+!/play.pokemonshowdown.com/sprites/gen4-back/
+!/play.pokemonshowdown.com/sprites/gen4-back-shiny/
+!/play.pokemonshowdown.com/sprites/gen4-shiny/
+!/play.pokemonshowdown.com/sprites/trainers/
+!/play.pokemonshowdown.com/sprites/trainers-sheet.png
+
 # built from other sources
 /play.pokemonshowdown.com/index.php
 /play.pokemonshowdown.com/index.html
