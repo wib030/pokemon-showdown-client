@@ -635,35 +635,7 @@ export const Dex = new class implements ModdedDex {
 
 		if (miscData.num !== 0 && miscData.num > -5000) {
 			let baseSpeciesid = toID(species.baseSpecies);
-			switch (baseSpeciesid) {
-				case 'wibblypuff':
-					spriteData.cryurl = 'audio/cries/jigglypuff';
-					break;
-				case 'megamarill':
-					spriteData.cryurl = 'audio/cries/marill';
-					break;
-				case 'giratinaantibug':
-				case 'giratinaantidark':
-				case 'giratinaantidragon':
-				case 'giratinaantielectric':
-				case 'giratinaantifighting':
-				case 'giratinaantifire':
-				case 'giratinaantiflying':
-				case 'giratinaantighost':
-				case 'giratinaantigrass':
-				case 'giratinaantiground':
-				case 'giratinaantiice':
-				case 'giratinaantipoison':
-				case 'giratinaantipsychic':
-				case 'giratinaantirock':
-				case 'giratinaantisteel':
-				case 'giratinaantiwater':
-					spriteData.cryurl = 'audio/cries/giratina';
-					break;
-				default:
-					spriteData.cryurl = 'audio/cries/' + baseSpeciesid;
-					break;
-			}
+			spriteData.cryurl = 'audio/cries/' + baseSpeciesid;
 			let formeid = species.formeid;
 			if (species.isMega || formeid && (
 				formeid === '-crowned' ||
