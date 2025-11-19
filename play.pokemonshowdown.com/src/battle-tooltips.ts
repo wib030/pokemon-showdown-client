@@ -2030,7 +2030,9 @@ export class BattleTooltips {
 
 		value.reset(move.basePower);
 		
-		if (this.pokemonHasType(pokemon, moveType)) {
+		if (pokemon.ability === 'Adaptability' && this.pokemonHasType(pokemon, moveType)) {
+			value.modify(2, 'Adaptability STAB Bonus');
+		} else if (this.pokemonHasType(pokemon, moveType)) {
 			value.modify(1.5, 'STAB Bonus');
 		}
 
