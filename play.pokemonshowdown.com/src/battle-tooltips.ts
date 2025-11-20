@@ -650,7 +650,7 @@ export class BattleTooltips {
 			let basePowers = [];
 			for (const active of foeActive) {
 				if (!active) continue;
-				value = this.getMoveBasePower(move, moveType, value, active);
+				value = this.getMoveBasePower(move, moveType, value, active, false);
 				basePower = `${value}`;
 				if (prevBasePower === null) prevBasePower = basePower;
 				if (prevBasePower !== basePower) difference = true;
@@ -664,7 +664,7 @@ export class BattleTooltips {
 		}
 		if (!showingMultipleBasePowers && category !== 'Status') {
 			let activeTarget = foeActive[0] || foeActive[1] || foeActive[2];
-			value = this.getMoveBasePower(move, moveType, value, activeTarget);
+			value = this.getMoveBasePower(move, moveType, value, activeTarget, false);
 			text += `<p>Base power: ${value}</p>`;
 		}
 		
@@ -2031,7 +2031,7 @@ export class BattleTooltips {
 	// Gets the proper current base power for moves which have a variable base power.
 	// Takes into account the target for some moves.
 	// If it is unsure of the actual base power, it gives an estimate.
-	getMoveBasePower(move: Dex.Move, moveType: Dex.TypeName, value: ModifiableValue, target: Pokemon | null = null, considerStab: boolean = false) {
+	getMoveBasePower(move: Dex.Move, moveType: Dex.TypeName, value: ModifiableValue, target: Pokemon | null = null, considerStab: boolean) {
 		const pokemon = value.pokemon;
 		const serverPokemon = value.serverPokemon;
 
