@@ -2029,12 +2029,6 @@ export class BattleTooltips {
 		const modifiedStats = this.calculateModifiedStats(pokemon, serverPokemon);
 
 		value.reset(move.basePower);
-		
-		if (pokemon.ability === 'Adaptability' && this.pokemonHasType(pokemon, moveType)) {
-			value.modify(2, 'Adaptability STAB Bonus');
-		} else if (this.pokemonHasType(pokemon, moveType)) {
-			value.modify(1.5, 'STAB Bonus');
-		}
 
 		if (move.id === 'acrobatics') {
 			if (!serverPokemon.item) {
@@ -2496,6 +2490,12 @@ export class BattleTooltips {
 					value.abilityModify(1 + 0.05 * i, "The Eminence in the Shadow");
 				}
 			}
+		}
+		
+		if (pokemon.ability === 'Adaptability' && this.pokemonHasType(pokemon, moveType)) {
+			value.modify(2, '2x Damage from Adaptability STAB');
+		} else if (this.pokemonHasType(pokemon, moveType)) {
+			value.modify(1.5, '1.5x Damage from STAB');
 		}
 
 		return value;
