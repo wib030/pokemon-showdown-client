@@ -2124,11 +2124,20 @@ export class BattleTooltips {
 		// Moves which have base power changed due to items
 		if (serverPokemon.item) {
 			let item = this.battle.dex.items.get(serverPokemon.item);
-			if (move.id === 'fling' && item.fling) {
-				value.itemModify(item.fling.basePower);
-			}
-			if (move.id === 'naturalgift') {
-				value.itemModify(item.naturalGift.basePower);
+			if (considerStab) {
+				if (move.id === 'fling' && item.fling) {
+					value.set(item.fling.basePower);
+				}
+				if (move.id === 'naturalgift') {
+					value.set(item.naturalGift.basePower);
+				}
+			} else {
+				if (move.id === 'fling' && item.fling) {
+					value.itemModify(item.fling.basePower);
+				}
+				if (move.id === 'naturalgift') {
+					value.itemModify(item.naturalGift.basePower);
+				}
 			}
 		}
 		// Moves which have base power changed according to weight
