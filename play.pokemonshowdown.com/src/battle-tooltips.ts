@@ -650,7 +650,7 @@ export class BattleTooltips {
 			let basePowers = [];
 			for (const active of foeActive) {
 				if (!active) continue;
-				value = this.getMoveBasePower(move, moveType, value, active, false);
+				value = this.getMoveBasePower(move, moveType, value, active);
 				basePower = `${value}`;
 				if (prevBasePower === null) prevBasePower = basePower;
 				if (prevBasePower !== basePower) difference = true;
@@ -664,11 +664,11 @@ export class BattleTooltips {
 		}
 		if (!showingMultipleBasePowers && category !== 'Status') {
 			let activeTarget = foeActive[0] || foeActive[1] || foeActive[2];
-			value = this.getMoveBasePower(move, moveType, value, activeTarget, false);
+			value = this.getMoveBasePower(move, moveType, value, activeTarget);
 			text += `<p>Base power: ${value}</p>`;
 		}
 		
-		const effectivePower = this.getMoveBasePower(move, moveType, value, activeTarget, true);
+		const effectivePower = this.getMoveBasePower(move, moveType, value, activeTarget);
 		
 		if (pokemon.ability === 'Adaptability' && this.pokemonHasType(pokemon, moveType)) {
 			text += `<p>2x damage from Adaptability STAB boost.</p>`;
