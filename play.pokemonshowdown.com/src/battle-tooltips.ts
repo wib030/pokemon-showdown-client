@@ -668,9 +668,9 @@ export class BattleTooltips {
 			const oldValue = value;
 			text += `<p>Base power: ${value}</p>`;
 			
-			if (pokemon.ability === 'Adaptability' && this.pokemonHasType(pokemon, moveType)) {
+			if (value.pokemon.ability === 'Adaptability' && this.pokemonHasType(value.pokemon, moveType)) {
 				value.modify(2, 'Adaptability STAB Boost');
-			} else if (this.pokemonHasType(pokemon, moveType)) {
+			} else if (this.pokemonHasType(value.pokemon, moveType)) {
 				value.modify(1.5, 'STAB Boost');
 			}
 			
