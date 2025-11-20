@@ -673,7 +673,7 @@ export class BattleTooltips {
 			}
 		}
 
-		let accuracy = this.getMoveAccuracy(move, value, moveType);
+		let accuracy = this.getMoveAccuracy(move, moveType, value);
 
 		// Deal with Nature Power special case, indicating which move it calls.
 		if (move.id === 'naturepower') {
@@ -1792,7 +1792,7 @@ export class BattleTooltips {
 	}
 
 	// Gets the current accuracy for a move.
-	getMoveAccuracy(move: Dex.Move, value: ModifiableValue, target?: Pokemon, moveType: Dex.TypeName) {
+	getMoveAccuracy(move: Dex.Move, moveType: Dex.TypeName, value: ModifiableValue, target?: Pokemon) {
 		value.reset(move.accuracy === true ? 0 : move.accuracy, true);
 		let pokemon = value.pokemon;
 		
