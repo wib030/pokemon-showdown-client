@@ -667,7 +667,7 @@ export class BattleTooltips {
 			value = this.getMoveBasePower(move, moveType, value, activeTarget, false);
 			text += `<p>Base power: ${value}</p>`;
 			
-			if (pokemon.ability.id === 'adaptability' && this.pokemonHasType(pokemon, moveType)) {
+			if (ability === 'adaptability' && this.pokemonHasType(pokemon, moveType)) {
 				value = this.getMoveBasePower(move, moveType, value, activeTarget, true);
 				text += `<p>Effective power: ${value.value} (2x from Adaptability STAB)</p>`;
 			} else if (this.pokemonHasType(pokemon, moveType)) {
@@ -1966,6 +1966,7 @@ export class BattleTooltips {
 	getMoveBasePower(move: Dex.Move, moveType: Dex.TypeName, value: ModifiableValue, target: Pokemon | null = null, considerStab: boolean) {
 		const pokemon = value.pokemon;
 		const serverPokemon = value.serverPokemon;
+		const ability = toID(serverPokemon.ability || pokemon.ability || serverPokemon.baseAbility);
 
 		// apply modifiers for moves that depend on the actual stats
 		const modifiedStats = this.calculateModifiedStats(pokemon, serverPokemon);
@@ -2435,7 +2436,7 @@ export class BattleTooltips {
 		}
 		
 		if (considerStab) {
-			if (pokemon.ability.id === 'adaptability' && this.pokemonHasType(pokemon, moveType)) {
+			if (ability === 'adaptability' && this.pokemonHasType(pokemon, moveType)) {
 				value.modify(2, 'Adaptability STAB Boost');
 			} else if (this.pokemonHasType(pokemon, moveType)) {
 				value.modify(1.5, 'STAB Boost');
