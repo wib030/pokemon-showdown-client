@@ -667,9 +667,12 @@ export class BattleTooltips {
 			value = this.getMoveBasePower(move, moveType, value, activeTarget, false);
 			text += `<p>Base power: ${value}</p>`;
 			
-			if (this.pokemonHasType(pokemon, moveType)) {
+			if (pokemon.ability === 'Adaptability' && this.pokemonHasType(pokemon, moveType)) {
 				value = this.getMoveBasePower(move, moveType, value, activeTarget, true);
-				text += `<p>Effective power: ${value}</p>`;
+				text += `<p>Effective power: ${value.value} (2x from Adaptability STAB)</p>`;
+			} else if (this.pokemonHasType(pokemon, moveType)) {
+				value = this.getMoveBasePower(move, moveType, value, activeTarget, true);
+				text += `<p>Effective power: ${value.value} (1.5x from STAB)</p>`;
 			}
 		}
 
