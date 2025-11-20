@@ -665,18 +665,17 @@ export class BattleTooltips {
 		if (!showingMultipleBasePowers && category !== 'Status') {
 			let activeTarget = foeActive[0] || foeActive[1] || foeActive[2];
 			value = this.getMoveBasePower(move, moveType, value, activeTarget);
-			const oldValue = value;
 			text += `<p>Base power: ${value}</p>`;
-			
-			if (value.pokemon.ability === 'Adaptability' && this.pokemonHasType(value.pokemon, moveType)) {
-				value.modify(2, 'Adaptability STAB Boost');
-			} else if (this.pokemonHasType(value.pokemon, moveType)) {
-				value.modify(1.5, 'STAB Boost');
-			}
-			
-			if (value !== oldValue) {
-				text += `<p>Effective base power: ${value}</p>`;
-			}
+		}
+		
+		if (value.pokemon.ability === 'Adaptability' && this.pokemonHasType(value.pokemon, moveType)) {
+			let effectivePower = this.getMoveBasePower(move, moveType, value, activeTarget, true);
+			text += `<p>2x Damage from Adaptability STAB Boost.</p>`;
+			text += `<p>(Effective base power: ${effectivePower})</p>`;
+		} else if (this.pokemonHasType(value.pokemon, moveType)) {
+			let effectivePower = this.getMoveBasePower(move, moveType, value, activeTarget, true);
+			text += `<p>1.5x Damage from STAB Boost.</p>`;
+			text += `<p>(Effective base power: ${effectivePower})</p>`;
 		}
 
 		let accuracy = this.getMoveAccuracy(move, value);
@@ -2032,7 +2031,7 @@ export class BattleTooltips {
 	// Gets the proper current base power for moves which have a variable base power.
 	// Takes into account the target for some moves.
 	// If it is unsure of the actual base power, it gives an estimate.
-	getMoveBasePower(move: Dex.Move, moveType: Dex.TypeName, value: ModifiableValue, target: Pokemon | null = null) {
+	getMoveBasePower(move: Dex.Move, moveType: Dex.TypeName, value: ModifiableValue, target: Pokemon | null = null, considerStab: boolean = false) {
 		const pokemon = value.pokemon;
 		const serverPokemon = value.serverPokemon;
 
@@ -2502,7 +2501,15 @@ export class BattleTooltips {
 				}
 			}
 		}
-
+		
+		if (considerStab) {
+			if (pokemon.ability === 'Adaptability' && this.pokemonHasType(pokemon, moveType)) {
+				value.modify(2, 'Adaptability STAB Boost');
+			} else if (this.pokemonHasType(pokemon, moveType)) {
+				value.modify(1.5, 'STAB Boost');
+			}
+		}
+		
 		return value;
 	}
 
