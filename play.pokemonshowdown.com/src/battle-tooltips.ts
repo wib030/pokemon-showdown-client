@@ -665,7 +665,18 @@ export class BattleTooltips {
 		if (!showingMultipleBasePowers && category !== 'Status') {
 			let activeTarget = foeActive[0] || foeActive[1] || foeActive[2];
 			value = this.getMoveBasePower(move, moveType, value, activeTarget);
+			const oldValue = value;
 			text += `<p>Base power: ${value}</p>`;
+			
+			if (pokemon.ability === 'Adaptability' && this.pokemonHasType(pokemon, moveType)) {
+				value.modify(2, 'Adaptability STAB Boost');
+			} else if (this.pokemonHasType(pokemon, moveType)) {
+				value.modify(1.5, 'STAB Boost');
+			}
+			
+			if (value !== oldValue) {
+				text += `<p>Effective base power: ${value}</p>`;
+			}
 		}
 
 		let accuracy = this.getMoveAccuracy(move, value);
@@ -2490,12 +2501,6 @@ export class BattleTooltips {
 					value.abilityModify(1 + 0.05 * i, "The Eminence in the Shadow");
 				}
 			}
-		}
-		
-		if (pokemon.ability === 'Adaptability' && this.pokemonHasType(pokemon, moveType)) {
-			value.modify(2, '2x Damage from Adaptability STAB');
-		} else if (this.pokemonHasType(pokemon, moveType)) {
-			value.modify(1.5, '1.5x Damage from STAB');
 		}
 
 		return value;
