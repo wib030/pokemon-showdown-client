@@ -236,7 +236,7 @@
 				pu: "PU",
 				zu: "ZU",
 				nfe: "NFE",
-				gen4lcuber: "LC Uber",
+				lcuber: "LC Uber",
 				lc: "LC",
 				cap: "CAP",
 				caplc: "CAP LC",
