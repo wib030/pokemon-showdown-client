@@ -1854,15 +1854,14 @@ export class BattleTooltips {
 		let targetAbility = target.effectiveAbility();
 		let targetAbilityID = toID(targetAbility);
 		const dex = this.battle.dex;
-		let species = this.battle.dex.species.get(target.species);
 		
-		if (species.abilities['1']) {
+		if (target.abilities['1']) {
 			targetAbility = target.effectiveAbility();
-			targetAbilityID = toID(targetAbility);
 		} else {
-			targetAbility = species.abilities['0'];
-			targetAbilityID = toID(targetAbility);
+			targetAbility = target.abilities['0'];
 		}
+		
+		targetAbilityID = toID(targetAbility);
 
 		let inflictsStatus = null;
 		if (category === 'Status') {
