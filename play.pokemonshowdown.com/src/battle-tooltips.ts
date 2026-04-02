@@ -1852,6 +1852,7 @@ export class BattleTooltips {
 		const targetTypes = target.getTypeList();
 		const sourceAbility = source.effectiveAbility();
 		const targetAbility = target.effectiveAbility();
+		const targetAbilityID = toID(targetAbility);
 		const dex = this.battle.dex;
 
 		let inflictsStatus = null;
@@ -1862,9 +1863,9 @@ export class BattleTooltips {
 			if (['block', 'meanlook', 'spiderweb'].includes(move.id)) inflictsStatus = 'trapped';
 		}
 
-		const abilityFactor = BattleTooltips.getTypeAbilityWeakness(attackType, toID(targetAbility), dex);
+		const abilityFactor = BattleTooltips.getTypeAbilityWeakness(attackType, targetAbilityID, dex);
 		
-		if (targetAbility === 'Unown Force' && attackType !== '???') {
+		if (targetAbilityID === 'unownforce') {
 			if (attackType === 'Normal') {
 				return 2;
 			} else {
