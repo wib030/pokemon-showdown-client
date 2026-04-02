@@ -1851,17 +1851,9 @@ export class BattleTooltips {
 
 		const targetTypes = target.getTypeList();
 		const sourceAbility = source.effectiveAbility();
-		let targetAbility = target.effectiveAbility();
-		let targetAbilityID = toID(targetAbility);
+		const targetAbility = target.effectiveAbility();
+		const targetAbilityID = toID(targetAbility);
 		const dex = this.battle.dex;
-		
-		if (target.abilities['1']) {
-			targetAbility = target.effectiveAbility();
-		} else {
-			targetAbility = target.abilities['0'];
-		}
-		
-		targetAbilityID = toID(targetAbility);
 
 		let inflictsStatus = null;
 		if (category === 'Status') {
@@ -1872,14 +1864,6 @@ export class BattleTooltips {
 		}
 
 		const abilityFactor = BattleTooltips.getTypeAbilityWeakness(attackType, targetAbilityID, dex);
-		
-		if (targetAbilityID === 'unownforce') {
-			if (attackType === 'Normal') {
-				return 2;
-			} else {
-				return 0.5;
-			}
-		}
 		
 		let factor = abilityFactor;
 		for (const targetType of targetTypes) {
