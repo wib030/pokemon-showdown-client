@@ -1851,8 +1851,8 @@ export class BattleTooltips {
 
 		const targetTypes = target.getTypeList();
 		const sourceAbility = source.effectiveAbility();
-		const targetAbility = target.effectiveAbility();
-		const targetAbilityID = toID(targetAbility);
+		let targetAbility = target.effectiveAbility();
+		let targetAbilityID = toID(targetAbility);
 		const dex = this.battle.dex;
 		let species = this.battle.dex.species.get(target.species);
 		
