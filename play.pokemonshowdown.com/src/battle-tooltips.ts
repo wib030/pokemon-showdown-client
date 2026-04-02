@@ -1851,15 +1851,18 @@ export class BattleTooltips {
 
 		const targetTypes = target.getTypeList();
 		const sourceAbility = source.effectiveAbility();
-		const dex = this.battle.dex;
-		
-		if (target.abilities['1']) {
-			const targetAbility = target.effectiveAbility();
-		} else {
-			const targetAbility = target.abilities['0'];
-		}
-		
+		const targetAbility = target.effectiveAbility();
 		const targetAbilityID = toID(targetAbility);
+		const dex = this.battle.dex;
+		let species = this.battle.dex.species.get(target.species);
+		
+		if (species.abilities['1']) {
+			targetAbility = target.effectiveAbility();
+			targetAbilityID = toID(targetAbility);
+		} else {
+			targetAbility = species.abilities['0'];
+			targetAbilityID = toID(targetAbility);
+		}
 
 		let inflictsStatus = null;
 		if (category === 'Status') {
