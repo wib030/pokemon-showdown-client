@@ -1851,14 +1851,15 @@ export class BattleTooltips {
 
 		const targetTypes = target.getTypeList();
 		const sourceAbility = source.effectiveAbility();
-		const targetAbility = target.effectiveAbility();
-		const targetAbilityID = toID(targetAbility);
 		const dex = this.battle.dex;
 		
-		if (target.abilities['1'].exists === false) {
-			targetAbility = target.abilities['0'];
-			targetAbilityID = toID(targetAbility);
+		if (target.abilities['1']) {
+			const targetAbility = target.effectiveAbility();
+		} else {
+			const targetAbility = target.abilities['0'];
 		}
+		
+		const targetAbilityID = toID(targetAbility);
 
 		let inflictsStatus = null;
 		if (category === 'Status') {
