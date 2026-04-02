@@ -1855,7 +1855,7 @@ export class BattleTooltips {
 		const targetAbilityID = toID(targetAbility);
 		const dex = this.battle.dex;
 		
-		if (!target.abilities['1']) {
+		if (target.abilities['1'].exists === false) {
 			targetAbility = target.abilities['0'];
 			targetAbilityID = toID(targetAbility);
 		}
