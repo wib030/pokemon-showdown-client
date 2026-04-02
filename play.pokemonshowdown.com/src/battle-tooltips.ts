@@ -1843,14 +1843,6 @@ export class BattleTooltips {
 	getMoveEffectiveness(
 		source: Pokemon, move: Dex.Move, attackType: Dex.TypeName, category: Dex.CategoryName, target: Pokemon
 	) {
-		if (targetAbility === 'Unown Force' && category !== 'Status' && attackType !== '???') {
-			if (attackType === 'Normal') {
-				return 2;
-			} else {
-				return 0.5;
-			}
-		}
-		
 		if (([
 			'adjacentAlly', 'adjacentAllyOrSelf', 'self', 'allySide', 'foeSide', 'all',
 		] satisfies Dex.MoveTarget[] as Dex.MoveTarget[]).includes(move.target)) {
@@ -1896,6 +1888,13 @@ export class BattleTooltips {
 		}
 		if (targetAbility === 'Wonder Guard' && factor <= 1 && category !== 'Status') return 0;
 		if (sourceAbility === 'Tinted Lens' && factor < 1) factor *= 2;
+		if (targetAbility === 'Unown Force' && category !== 'Status' && attackType !== '???') {
+			if (attackType === 'Normal') {
+				return 2;
+			} else {
+				return 0.5;
+			}
+		}
 		if (category === 'Status') {
 			if (move.id === 'thunderwave') return factor === 0 ? 0 : 1;
 			if (targetAbility === 'Levitate') return 1; // Levitate acts like a type-based immunity
