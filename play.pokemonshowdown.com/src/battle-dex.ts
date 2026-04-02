@@ -44,6 +44,7 @@ export declare namespace Dex {
 	export type BoostStatName = DexData.BoostStatName;
 	export type TypeName = DexData.TypeName;
 	export type StatusName = DexData.StatusName;
+	export type CategoryName = DexData.CategoryName;
 	export type GenderName = DexData.GenderName;
 	export type NatureName = DexData.NatureName;
 	export type MoveTarget = DexData.MoveTarget;
