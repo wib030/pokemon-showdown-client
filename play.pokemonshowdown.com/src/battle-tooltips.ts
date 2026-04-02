@@ -1814,14 +1814,6 @@ export class BattleTooltips {
 	}
 	
 	static getTypeAbilityWeakness(attackType: Dex.TypeName, abilityid: ID, dex: ModdedDex = Dex) {
-		if (abilityid === 'unownforce' && attackType !== '???') {
-			if (attackType === 'Normal') {
-				return 2;
-			} else {
-				return 0.5;
-			}
-		}
-		
 		if (attackType === 'Ground' && abilityid === 'levitate') return 0;
 		if (attackType === 'Water' && abilityid === 'dryskin') return 0;
 		if (attackType === 'Fire' && abilityid === 'flashfire') return 0;
@@ -1871,6 +1863,15 @@ export class BattleTooltips {
 		}
 
 		const abilityFactor = BattleTooltips.getTypeAbilityWeakness(attackType, toID(targetAbility), dex);
+		
+		if (targetAbility === 'Unown Force' && attackType !== '???') {
+			if (attackType === 'Normal') {
+				return 2;
+			} else {
+				return 0.5;
+			}
+		}
+		
 		let factor = abilityFactor;
 		for (const targetType of targetTypes) {
 			const tType = dex.types.get(targetType);
