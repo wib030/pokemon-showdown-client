@@ -527,16 +527,9 @@ export class Pokemon implements PokemonDetails, PokemonHealth {
 		return !this.getTypeList(serverPokemon).includes('Flying');
 	}
 	effectiveAbility(serverPokemon?: ServerPokemon) {
-		let ability = this.side.battle.dex.abilities.get(
+		const ability = this.side.battle.dex.abilities.get(
 			serverPokemon?.ability || this.ability || serverPokemon?.baseAbility || ''
 		);
-		if (serverPokemon?.abilities['1']) {
-			ability = this.side.battle.dex.abilities.get(
-				serverPokemon?.ability || this.ability || serverPokemon?.baseAbility || ''
-			);
-		} else {
-			ability = serverPokemon?.ability;
-		}
 		if (
 			this.fainted ||
 			(this.volatiles['transform'] && ability.flags['notransform']) ||
