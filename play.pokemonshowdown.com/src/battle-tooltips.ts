@@ -2089,13 +2089,16 @@ export class BattleTooltips {
 		let accuracyAfterChain = (value.value * chain) / 4096;
 		accuracyAfterChain = accuracyAfterChain % 1 > 0.5 ? Math.ceil(accuracyAfterChain) : Math.floor(accuracyAfterChain);
 		value.set(accuracyAfterChain);
+		
+		const accBoostTable = [1, 133 / 100, 166 / 100, 2, 233 / 100, 133 / 50, 3];
+		const accDecrementTable = [1, 92 / 100, 84 / 100, 75 / 100, 67 / 100, 59 / 100, 50 / 100];
 
 		// Unlike for Atk, Def, etc. accuracy and evasion boosts are applied after modifiers
 		if (pokemon?.boosts.accuracy) {
 			if (pokemon.boosts.accuracy > 0) {
-				value.set(Math.floor(value.value * (pokemon.boosts.accuracy + 3) / 3));
+				value.set(Math.floor(value.value *= accBoostTable[pokemon.boosts.accuracy]));
 			} else {
-				value.set(Math.floor(value.value * 3 / (3 - pokemon.boosts.accuracy)));
+				value.set(Math.floor(value.value /= accDecrementTable[-pokemon.boosts.accuracy]));
 			}
 		}
 
