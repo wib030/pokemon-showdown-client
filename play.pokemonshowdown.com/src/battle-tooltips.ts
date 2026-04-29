@@ -2098,7 +2098,7 @@ export class BattleTooltips {
 			if (pokemon.boosts.accuracy > 0) {
 				value.set(Math.floor(value.value *= accBoostTable[pokemon.boosts.accuracy]));
 			} else {
-				value.set(Math.floor(value.value *= accDecrementTable[pokemon.boosts.accuracy]));
+				value.set(Math.floor(value.value /= accDecrementTable[-pokemon.boosts.accuracy]));
 			}
 		}
 
