@@ -1352,6 +1352,9 @@ export class BattleLog {
 		));
 		return {
 			isWhitelisted(uri: string) {
+				if (uri.startsWith('playrowanshowdown.com')) {
+					return true;
+				}
 				if (uri.startsWith('/') && uri[1] !== '/') {
 					// domain-relative URIs are safe
 					return true;
