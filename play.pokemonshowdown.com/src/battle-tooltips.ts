@@ -667,12 +667,10 @@ export class BattleTooltips {
 			value = this.getMoveBasePower(move, moveType, value, activeTarget, false);
 			text += `<p>Base power: ${value}</p>`;
 			
-			if (ability === 'adaptability' && this.pokemonHasType(pokemon, moveType)) {
-				value = this.getMoveBasePower(move, moveType, value, activeTarget, true);
-				if (value.value > 0) text += `<p>Effective power: ${value.value} (2x from Adaptability STAB)</p>`;
-			} else if (this.pokemonHasType(pokemon, moveType)) {
-				value = this.getMoveBasePower(move, moveType, value, activeTarget, true);
-				if (value.value > 0) text += `<p>Effective power: ${value.value} (1.5x from STAB)</p>`;
+			let effectivePower = this.getMoveBasePower(move, moveType, value, activeTarget, true);
+			
+			if (effectivePower.value != value.value) {
+				text += `<p>Effective power: ${effectivePower}</p>`;
 			}
 		}
 
@@ -2112,7 +2110,7 @@ export class BattleTooltips {
 	// Gets the proper current base power for moves which have a variable base power.
 	// Takes into account the target for some moves.
 	// If it is unsure of the actual base power, it gives an estimate.
-	getMoveBasePower(move: Dex.Move, moveType: Dex.TypeName, value: ModifiableValue, target: Pokemon | null = null, considerStab: boolean) {
+	getMoveBasePower(move: Dex.Move, moveType: Dex.TypeName, value: ModifiableValue, target: Pokemon | null = null, effectivePowerCalc: boolean) {
 		const pokemon = value.pokemon;
 		const serverPokemon = value.serverPokemon;
 		const ability = toID(serverPokemon.ability || pokemon.ability || serverPokemon.baseAbility);
@@ -2585,11 +2583,34 @@ export class BattleTooltips {
 			}
 		}
 		
-		if (considerStab) {
+		if (effectivePowerCalc) {
 			if (ability === 'adaptability' && this.pokemonHasType(pokemon, moveType)) {
 				value.modify(2, 'Adaptability STAB Boost');
 			} else if (this.pokemonHasType(pokemon, moveType)) {
 				value.modify(1.5, 'STAB Boost');
+			}
+			
+			switch (this.battle.weather) {
+			case 'sunnyday':
+				if (moveType == 'Fire') {
+					value.modify(1.5, 'Sun Boost');
+				}
+				else if (moveType == 'Water') {
+					value.modify(0.5, 'Sun Drop');
+				}
+				break;
+			case 'raindance':
+				if (moveType == 'Water') {
+					value.modify(1.5, 'Rain Boost');
+				}
+				else if (moveType == 'Fire') {
+					value.modify(0.5, 'Rain Drop');
+				}
+				break;
+			}
+			
+			if (this.battle.dex.items.get(serverPokemon.item).name == 'Life Orb') {
+				value.modify(1.3, "Life Orb Boost");
 			}
 		}
 		
