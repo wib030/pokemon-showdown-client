@@ -667,7 +667,8 @@ export class BattleTooltips {
 			value = this.getMoveBasePower(move, moveType, value, activeTarget, false);
 			text += `<p>Base power: ${value}</p>`;
 			
-			let effectivePower = this.getMoveBasePower(move, moveType, value, activeTarget, true);
+			let effectivePower = new ModifiableValue(this.battle, pokemon, serverPokemon);
+			effectivePower = this.getMoveBasePower(move, moveType, effectivePower, activeTarget, true);
 			
 			if (effectivePower.value != value.value) {
 				text += `<p>Effective power: ${effectivePower}</p>`;
