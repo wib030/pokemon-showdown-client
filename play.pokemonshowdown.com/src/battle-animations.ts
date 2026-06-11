@@ -1928,6 +1928,7 @@ export class PokemonSprite extends Sprite {
 		reflect: ['Reflect', 'good'],
 		// New
 		stickybarbchip: ['Sticky Barb', 'bad'],
+		hpannounce: ['Has Hidden Power', 'neutral'],
 	};
 	forme = '';
 	cryurl: string | undefined = undefined;

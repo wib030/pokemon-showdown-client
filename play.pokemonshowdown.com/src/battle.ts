@@ -2727,6 +2727,9 @@ export class Battle {
 			case 'strangleweed':
 				this.scene.resultAnim(poke, 'Strangle Weed', 'bad');
 				break;
+			case 'hpannounce':
+				this.scene.resultAnim(poke, 'Has Hidden Power', 'neutral');
+				break;
 			}
 			if (!(effect.id === 'typechange' && poke.terastallized)) {
 				poke.addVolatile(effect.id);
