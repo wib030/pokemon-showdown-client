@@ -1423,13 +1423,13 @@ export class Battle {
 				if (ability) {
 					this.activateAbility(poke, ability.name);
 				} 
-				this.weatherTimeLeft = (weather === 'raindance') ? 8 : 10;
+				this.weatherTimeLeft = (weather === 'raindance' || weather === 'sunnyday') ? 8 : 10;
 				this.weatherMinTimeLeft = (isExtremeWeather) ? 0 : 5;
 			} else if (isExtremeWeather) {
 				this.weatherTimeLeft = 0;
 				this.weatherMinTimeLeft = 0;
 			} else {
-				this.weatherTimeLeft = (weather === 'raindance') ? 8 : 10;
+				this.weatherTimeLeft = (weather === 'raindance' || weather === 'sunnyday') ? 8 : 10;
 				this.weatherMinTimeLeft = (this.gen <= 3 ? 0 : 5);
 			}
 		}
